@@ -1,5 +1,3 @@
-var config = require('./config');
-
 module.exports = function(grunt) {
   var config = require('./build.config.js')
       , plugins = require('matchdep').filterDev('grunt-*')
