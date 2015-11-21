@@ -5,14 +5,14 @@
    */
   angular
     .module('game.board', ['game.config'])
-    .service('BoardController', BoardController)
+    .service('BoardManager', BoardManager)
     .factory('BoardNullTile', BoardNullTile)
     .factory('BoardTile', BoardTile)
   ;
 
 
-  BoardController.$inject = ['GameConfig', 'BoardNullTile',];
-  function BoardController(config, NullTile) {
+  BoardManager.$inject = ['GameConfig', 'BoardNullTile',];
+  function BoardManager(config, NullTile) {
     var ctrl = this;
 
     ctrl.placeholders = {

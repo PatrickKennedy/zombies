@@ -21,7 +21,7 @@
   }
 
 
-  ZombiesViewCtrl.$inject = ['$scope', 'GameController'];
+  ZombiesViewCtrl.$inject = ['$scope', 'GameManager'];
   function ZombiesViewCtrl($scope, game) {
     var ctrl = this;
     game.initalize();

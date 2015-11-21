@@ -15,14 +15,14 @@ describe('Game', function() {
 
     });
 
-    describe('Controller', function() {
+    describe('Manager', function() {
       var board
           , Tile
           , test_tiles
           ;
 
-      beforeEach(inject(function(BoardController, BoardTile) {
-        board = BoardController;
+      beforeEach(inject(function(BoardManager, BoardTile) {
+        board = BoardManager;
         Tile = BoardTile;
         test_tiles = {
             n:  new BoardTile({ exits: [0], }),
@@ -39,7 +39,7 @@ describe('Game', function() {
         };
       }));
 
-      it('should have a BoardController', function() {
+      it('should have a BoardManager', function() {
         expect(board).toBeDefined();
         expect(Tile).toBeDefined();
       });

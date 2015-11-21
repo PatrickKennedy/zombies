@@ -1,10 +1,10 @@
 describe('Game', function() {
-  describe('GameController', function() {
+  describe('GameManager', function() {
     beforeEach(module('game.core'));
 
     var game;
-    beforeEach(inject(function(GameController) {
-      game = GameController;
+    beforeEach(inject(function(GameManager) {
+      game = GameManager;
     }));
 
   });

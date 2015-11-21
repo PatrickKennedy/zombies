@@ -32,16 +32,15 @@
    */
   angular
     .module('game.core', ['game.config', 'game.board', 'game.deck'])
-    .service('GameController', GameController)
+    .service('GameManager', GameManager)
   ;
 
-  GameController.$inject = ['GameConfig',];
-  function GameController(config) {
+  GameManager.$inject = ['GameConfig', 'DeckManager', ];
+  function GameManager(config, Deck) {
     var ctrl = this;
 
     ctrl.defaults = {
       tiles: {
-        "0:0": 'foyer',
       },
       env: {
         time: 9,
