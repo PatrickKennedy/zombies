@@ -32,7 +32,7 @@
             {
               id: 'storage',
               name: 'Storage',
-              exits: ctrl.EXITS.north,
+              exits: [0],
               text: 'May draw a new card to find an item.',
               on_resolve: function(){ }
             },
@@ -41,14 +41,14 @@
               name: 'Kitchen',
               exits: [0, 1, 3],
               text: '+1 Health if end turn here.',
-              on_turn_end: function(){ if (ctrl.state.player) ctrl.state.player.health += 1; }
+              on_turn_end: function(game){ if (game.state.player) game.state.player.health += 1; }
             },
             {
               id: 'evil-temple',
               name: 'Evil Temple',
               exits: [1, 3],
               text: 'Resolve a new card to find totem.',
-              on_resolve: function(){ if(ctrl.state.player) ctrl.state.player.totem = true; }
+              on_resolve: function(game){ if(game.state.player) game.state.player.totem = true; }
             },
           ],
           outdoor: [
@@ -87,7 +87,7 @@
               name: 'Garden',
               exits: [1, 2, 3],
               text: '+1 Health if end turn here.',
-              on_turn_end: function(){ if (ctrl.state.player) ctrl.state.player.health += 1; }
+              on_turn_end: function(game){ if (game.state.player) game.state.player.health += 1; }
             },
             {
               id: 'graveyard',
@@ -100,6 +100,6 @@
           dev: [],
         },
       });
-    })
+    });
 
 }(angular));
