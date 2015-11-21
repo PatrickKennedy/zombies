@@ -56,6 +56,8 @@
 
     ctrl.state = {};
 
+    ctrl.decks = {};
+
     ctrl.initalize = function () {
       ctrl.state = Object.clone(ctrl.defaults, true);
     };

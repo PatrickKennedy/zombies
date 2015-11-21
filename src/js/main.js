@@ -27,16 +27,39 @@
    */
   angular
     .module('zombies', [
-      'zombies.templates', 'zombies.config', 'game.config', 'game.core', 'zombies.view',
+      'zombies.templates', 'zombies.config', 'game.core', 'zombies.view',
     ])
     .controller('ZombiesController', ZombiesController)
   ;
 
-  ZombiesController.$inject = ['$scope', 'ZombiesConfig', 'GameConfig', 'GameController'];
-  function ZombiesController($scope, config, game_config, game_ctrl) {
+  ZombiesController.$inject = [
+    '$scope', 'ZombiesConfig', 'GameConfig', 'GameManager', 'DeckManager', 'BoardTile'
+  ];
+  function ZombiesController($scope, config, game_config, game, Deck, Tile) {
+    var ctrl = this;
     $scope.config = config;
     $scope.game_config = game_config;
-    game = game_ctrl;
+    $scope.initalize_game = function(){
+      console.log('initalizing game');
+      ctrl.initalize_decks();
+      game.initalize();
+    };
 
+    ctrl.initalize_decks = function() {
+      var hold;
+      game.decks = {
+        indoor:   new Deck(game_config.cards.indoor.slice().map(function(t){ new Tile(t); })),
+        outdoor:  new Deck(game_config.cards.outdoor.slice().map(function(t){ new Tile(t); })),
+        dev:      new Deck(game_config.cards.dev.slice().map(function(t){ new Tile(t); })),
+      };
+
+      // the top of the card definitions (foyer) is always the first card we want to draw
+      hold = game.decks.indoor.draw(1, true);
+      game.decks.indoor.shuffle().discard(hold).combine();
+      // the same is true for the patio
+      hold = game.decks.outdoor.draw(1, true);
+      game.decks.outdoor.shuffle().discard(hold).combine();
+      game.decks.dev.shuffle();
+    };
   }
 }(angular));
