@@ -6,6 +6,8 @@ html(ng-app='zombies')
   body(ng-controller="ZombiesController as ctrl")
     #container
       zombies-view
+      zombies-crib-sheet
+      button(ng-click="initalize_game()") Start Game
 
     | <% scripts.forEach( function ( file ) { %><script type="text/javascript" src="<%= file %>"></script><% }); %>
 
