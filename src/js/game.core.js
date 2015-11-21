@@ -40,8 +40,6 @@
     var ctrl = this;
 
     ctrl.defaults = {
-      tiles: {
-      },
       env: {
         time: 9,
       },

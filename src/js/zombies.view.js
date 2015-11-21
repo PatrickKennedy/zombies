@@ -24,7 +24,6 @@
   ZombiesViewCtrl.$inject = ['$scope', 'GameManager'];
   function ZombiesViewCtrl($scope, game) {
     var ctrl = this;
-    game.initalize();
 
     // Viewport represented by x,y,r
     // (x,y) - the center point of the view
@@ -45,7 +44,7 @@
       for (var y = 0; y < radius; y++) {
         var row = ctrl.view_tiles[y];
         for (var x = 0; x < radius; x++) {
-          row[x] = game.state.tiles[x+x_offset +":"+ y+y_offset];
+          row[x] = game.board.tiles[x+x_offset +":"+ y+y_offset];
         }
       }
     };
