@@ -1,0 +1,25 @@
+#container {
+  width: 900px;
+  margin: auto;
+  background: rgba(0,0,0,.5)
+}
+
+#playingfield {
+  width: 750px;
+  margin: auto;
+  background: rgba(0,0,0,.5)
+}
+
+.tile {
+  transition: border-color .25s ease-in-out;
+  box-sizing: border-box;
+  width: 250px;
+  height: 250px;
+  float: left;
+  background: rgba(0,0,0,.5);
+  border: 1px solid transparent;
+}
+
+.tile:hover {
+  border-color: black;
+}
