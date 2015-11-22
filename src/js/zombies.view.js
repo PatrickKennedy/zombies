@@ -35,19 +35,30 @@
       [null, null, null],
     ];
 
+    ctrl.initialize = function (){};
+
     ctrl.update_view = function (){
+      console.log("updating view");
       var x_offset = ctrl.viewport[0]
           , y_offset = ctrl.viewport[1]
           , radius = ctrl.viewport[2]
           ;
 
       for (var y = 0; y < radius; y++) {
-        var row = ctrl.view_tiles[y];
         for (var x = 0; x < radius; x++) {
-          row[x] = game.board.tiles[x+x_offset +":"+ y+y_offset];
+          ctrl.view_tiles[y][x] = game.board.tiles[(x+x_offset) +":"+ (y+y_offset)];
         }
       }
     };
+
+    $scope.$watch(
+      function () { return game.board.tiles; },
+      function(new_value, old_value) {
+        if (new_value != old_value)
+          ctrl.update_view();
+      }
+    );
+
   }
 
   function defaultFilter() {

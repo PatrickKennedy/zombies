@@ -3,4 +3,10 @@
     li Time: {{ ctrl.state.env.time }}
     li Heath: {{ ctrl.state.player.health }}
     li Attack: {{ ctrl.state.player.attack }}
-    li Heath: {{ ctrl.state.player.totem }}
+    li Weapons:
+      ul
+        li(ng-repeat="ctrl.state.player.weapons")
+    li Items:
+      ul
+        li(ng-repeat="ctrl.state.player.items")
+    li Totem: {{ ctrl.state.player.totem }}
