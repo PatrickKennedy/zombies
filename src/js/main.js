@@ -27,13 +27,15 @@
    */
   angular
     .module('zombies', [
-      'zombies.templates', 'zombies.config', 'game.core', 'zombies.view',
+      'zombies.templates', 'zombies.config', 'game.core', 'zombies.cribsheet', 'zombies.view',
     ])
     .controller('ZombiesController', ZombiesController)
   ;
 
   ZombiesController.$inject = [
-    '$scope', 'ZombiesConfig', 'GameConfig', 'GameManager', 'DeckManager', 'BoardTile'
+    '$scope', 'ZombiesConfig',
+    'GameConfig', 'GameManager',
+    'DeckManager', 'BoardTile',
   ];
   function ZombiesController($scope, config, game_config, game, Deck, Tile) {
     var ctrl = this;
@@ -43,14 +45,17 @@
       console.log('initalizing game');
       ctrl.initalize_decks();
       game.initalize();
+      game.board.place_tile([0,0], game.decks.indoor.draw());
     };
+
+    ctrl.game = game;
 
     ctrl.initalize_decks = function() {
       var hold;
       game.decks = {
-        indoor:   new Deck(game_config.cards.indoor.slice().map(function(t){ new Tile(t); })),
-        outdoor:  new Deck(game_config.cards.outdoor.slice().map(function(t){ new Tile(t); })),
-        dev:      new Deck(game_config.cards.dev.slice().map(function(t){ new Tile(t); })),
+        indoor:   new Deck(game_config.cards.indoor.slice().map(function(t){ return new Tile(t); })),
+        outdoor:  new Deck(game_config.cards.outdoor.slice().map(function(t){ return new Tile(t); })),
+        dev:      new Deck(game_config.cards.dev.slice().map(function(t){ return new Tile(t); })),
       };
 
       // the top of the card definitions (foyer) is always the first card we want to draw
