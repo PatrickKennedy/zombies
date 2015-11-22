@@ -25,10 +25,17 @@
       actor: '0:0',
     };
 
-    ctrl.state = {};
+    ctrl.tiles = {};
+    ctrl.actor = '0:0';
 
     ctrl.initalize = function () {
-      ctrl.state = Object.clone(ctrl.defaults, true);
+      // ugly ugly ugly horrible initalization but everything assumes
+      // the board doesn't have a state object but I want to keep defaults
+      // externally configurable.
+      // todo: build proper initalization or actually use a state object. fml.
+      var defaults = Object.clone(ctrl.defaults, true);
+      ctrl.tiles = defaults.tiles;
+      ctrl.actor = defaults.actor;
     };
 
     ctrl.move_actor = function (point) {

@@ -89,7 +89,7 @@ describe('Game', function() {
 
       describe('.place_tile', function (){
         beforeEach(function (){
-          board.tiles = {};
+          board.initalize();
         });
 
         it('should place the tile in the board and update surrounding tiles', function(){

@@ -35,8 +35,8 @@
     .service('GameManager', GameManager)
   ;
 
-  GameManager.$inject = ['GameConfig', 'DeckManager', ];
-  function GameManager(config, Deck) {
+  GameManager.$inject = ['GameConfig', 'BoardManager', ];
+  function GameManager(config, board) {
     var ctrl = this;
 
     ctrl.defaults = {
@@ -53,11 +53,13 @@
     };
 
     ctrl.state = {};
-
     ctrl.decks = {};
+
+    ctrl.board = board;
 
     ctrl.initalize = function () {
       ctrl.state = Object.clone(ctrl.defaults, true);
+      ctrl.board.initalize();
     };
 
     ctrl.move = function () {
