@@ -73,7 +73,7 @@
       if (from_front)
         hand.reverse();
 
-      return hand;
+      return hand.length > 1 ? hand : hand[0];
     };
 
     Deck.prototype.deal = function (to_deal, to_hands, from_front){
