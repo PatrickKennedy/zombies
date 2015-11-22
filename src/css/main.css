@@ -1,21 +1,36 @@
 #container {
-  width: 900px;
+  display: flex;
+  flex-wrap: wrap;
+  width: 1000px;
   margin: auto;
   background: rgba(0,0,0,.5)
 }
 
-#playingfield {
+zombies-view {
   width: 750px;
-  margin: auto;
   background: rgba(0,0,0,.5)
 }
+
+#playingfield {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.playingfield-row {
+  display: flex;
+}
+
+zombies-crib-sheet {
+  width: 250px;
+  background: rgba(0,0,0,.5)
+}
+
 
 .tile {
   transition: border-color .25s ease-in-out;
   box-sizing: border-box;
   width: 250px;
   height: 250px;
-  float: left;
   background: rgba(0,0,0,.5);
   border: 1px solid transparent;
 }
