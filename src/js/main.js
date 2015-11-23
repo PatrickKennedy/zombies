@@ -39,19 +39,19 @@
     'DeckManager', 'BoardTile',
   ];
   function ZombiesController($scope, config, game_config, game, Deck, Tile) {
-    var ctrl = this;
-    $scope.config = config;
-    $scope.game_config = game_config;
-    $scope.initalize_game = function(){
+    var app = this;
+    app.config = config;
+    app.game_config = game_config;
+    app.initalize_game = function(){
       console.log('initalizing game');
-      ctrl.initalize_decks();
+      app.initalize_decks();
       game.initalize();
       game.board.place_tile([0,0], game.decks.indoor.draw());
     };
 
-    ctrl.game = game;
+    app.game = game;
 
-    ctrl.initalize_decks = function() {
+    app.initalize_decks = function() {
       var hold;
       game.decks = {
         indoor:   new Deck(game_config.cards.indoor.slice().map(function(t){ return new Tile(t); })),

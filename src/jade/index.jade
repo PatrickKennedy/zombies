@@ -3,11 +3,11 @@ html(ng-app='zombies')
   head
     | <% styles.forEach( function ( file ) { %><link rel="stylesheet" type="text/css" href="<%= file %>"><% }); %>
 
-  body(ng-controller="ZombiesController as ctrl")
+  body(ng-controller="ZombiesController as app")
     #container
       zombies-view
       zombies-crib-sheet
-      button(ng-click="initalize_game()") Start Game
+      button(ng-click="app.initalize_game()") Start Game
 
     | <% scripts.forEach( function ( file ) { %><script type="text/javascript" src="<%= file %>"></script><% }); %>
 
