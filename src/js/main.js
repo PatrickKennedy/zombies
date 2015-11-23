@@ -27,7 +27,8 @@
    */
   angular
     .module('zombies', [
-      'zombies.templates', 'zombies.config', 'game.core', 'zombies.cribsheet', 'zombies.view',
+      'zombies.templates', 'zombies.config', 'game.core',
+      'zombies.cribsheet', 'zombies.decks', 'zombies.view',
     ])
     .controller('ZombiesController', ZombiesController)
   ;

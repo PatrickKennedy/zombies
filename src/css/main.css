@@ -38,3 +38,34 @@ zombies-crib-sheet {
 .tile:hover {
   border-color: black;
 }
+
+zombies-dev-draw {
+  width: 750px;
+  background: rgba(0,0,0,.5);
+}
+
+zombies-crib-sheet {
+  width: 500px;
+  background: rgba(0,0,0,.5);
+}
+
+zombies-tile-draw {
+  width: 250px;
+  position: relative;
+  background: rgba(0,0,0,.5);
+}
+
+zombies-tile-draw .tile-card {
+  width: 200px;
+  height: 5px;
+  background: rgba(128, 0, 64, 0.5);
+  border: 1px solid gold;
+  border-top: none;
+}
+
+zombies-tile-draw .tile-card.top-card {
+  width: 200px;
+  height: 200px;
+  background: rgba(128, 0, 64, 0.5);
+  border: 1px solid gold;
+}
