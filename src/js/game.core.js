@@ -50,6 +50,7 @@
         weapons: [],
         totem: false,
       },
+      hand: null,
     };
 
     ctrl.state = {};

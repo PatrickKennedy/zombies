@@ -6,7 +6,10 @@ html(ng-app='zombies')
   body(ng-controller="ZombiesController as app")
     #container
       zombies-view
+      zombies-dev-draw(ng-model="app.game.decks.dev")
       zombies-crib-sheet
+      zombies-tile-draw(ng-model="app.game.decks.indoor")
+      zombies-tile-draw(ng-model="app.game.decks.outdoor")
       button(ng-click="app.initalize_game()") Start Game
 
     | <% scripts.forEach( function ( file ) { %><script type="text/javascript" src="<%= file %>"></script><% }); %>
