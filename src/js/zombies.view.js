@@ -1,13 +1,12 @@
 (function(angular){
   /*
    * View module
-   * Contains the display logic for the fixture list
+   * Contains the logic for displaying the game board through a viewport
    */
   angular
-    .module('zombies.view', ['view.jade'])
+    .module('zombies.view', [])
     .directive('zombiesView', zombiesView)
     .controller('ZombiesViewCtrl', ZombiesViewCtrl)
-    .filter('default', defaultFilter)
     .directive('zombieTile', zombieTile)
     .controller('ZombiesTileCtrl', ZombiesTileCtrl)
   ;
@@ -28,7 +27,7 @@
     // Viewport represented by x,y,r
     // (x,y) - the center point of the view
     // r - the radius of the view
-    ctrl.viewport = [0,0,3];
+    ctrl.viewport = [0,1,3];
     ctrl.view_tiles = [
       [null, null, null],
       [null, null, null],
@@ -42,11 +41,17 @@
       var x_offset = ctrl.viewport[0]
           , y_offset = ctrl.viewport[1]
           , radius = ctrl.viewport[2]
+          , diam = (radius - 1) / 2
           ;
 
       for (var y = 0; y < radius; y++) {
         for (var x = 0; x < radius; x++) {
-          ctrl.view_tiles[y][x] = game.board.tiles[(x+x_offset) +":"+ (y+y_offset)];
+          // the board uses a standard cartesian coordinates system
+          // this is possible because objects are referenced by keys rather
+          // than stored in an array, but an unfortunate side effect is that
+          // the coordinates sytems don't match in the y-axis.
+          var flip_y = radius-1-y;
+          ctrl.view_tiles[flip_y][x] = game.board.tiles[(x+x_offset-diam) +":"+ (y+y_offset-diam)];
         }
       }
     };
@@ -58,21 +63,14 @@
           ctrl.update_view();
       }
     );
-
   }
 
-  function defaultFilter() {
-    return function default_filter(item, def) {
-        if (item !== undefined)
-          return item;
-        return def;
-      };
-  }
 
   function zombieTile() {
     return {
-      scope: {
-        tile: '=',
+      scope: {},
+      bindToController: {
+        tile: '=ngModel',
       },
       templateUrl: 'tile.jade',
       controller: 'ZombiesTileCtrl',

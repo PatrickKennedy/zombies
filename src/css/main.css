@@ -3,12 +3,12 @@
   flex-wrap: wrap;
   width: 1000px;
   margin: auto;
-  background: rgba(0,0,0,.5)
+  background: rgba(0,0,0,.5);
 }
 
 zombies-view {
   width: 750px;
-  background: rgba(0,0,0,.5)
+  background: rgba(0,0,0,.5);
 }
 
 #playingfield {
@@ -20,13 +20,7 @@ zombies-view {
   display: flex;
 }
 
-zombies-crib-sheet {
-  width: 250px;
-  background: rgba(0,0,0,.5)
-}
-
-
-.tile {
+.view-tile {
   transition: border-color .25s ease-in-out;
   box-sizing: border-box;
   width: 250px;
@@ -35,7 +29,15 @@ zombies-crib-sheet {
   border: 1px solid transparent;
 }
 
-.tile:hover {
+.view-tile.present {
+  background: rgba(128, 64, 0, 0.5);
+}
+
+.view-tile.placeable {
+  background: rgba(255, 255, 0, 0.5);
+}
+
+.view-tile:hover {
   border-color: black;
 }
 
