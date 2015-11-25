@@ -50,7 +50,18 @@
 
     ctrl.place_tile = function (point, tile) {
       // todo: add overwrite checks
-      ctrl.tiles[ctrl.coord(point)] = tile;
+      var coord = ctrl.coord(point)
+          , enter_tile = ctrl.tiles[coord]
+          , exit_coord
+          , exit_tile
+          ;
+
+      // if there are no tiles then enter_tile will always be false-y
+      // we want to let the first tile pass unquestioned
+      if (Object.keys(ctrl.tiles).length > 0 && !(enter_tile && enter_tile.placeable))
+        return false;
+
+      ctrl.tiles[coord] = tile;
       for (var i = 0; i < tile.exits.length; i++) {
         var vector = tile.get_vector(tile.exits[i])
             , exit_point = [
@@ -58,8 +69,13 @@
               point[1] + vector[1],
             ]
             ;
-        ctrl.tiles[ctrl.coord(exit_point)] = ctrl.placeholders.indoor;
+        exit_coord = ctrl.coord(exit_point);
+        exit_tile = ctrl.tiles[exit_coord];
+        if (!exit_tile)
+          ctrl.tiles[exit_coord] = ctrl.placeholders.indoor;
       }
+
+      return true;
     };
 
     ctrl.coord = function(point) {

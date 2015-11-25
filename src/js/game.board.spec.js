@@ -58,35 +58,6 @@ describe('Game', function() {
         });
       });
 
-      describe('.near', function (){
-        it('should return true if two points are next to one another', function(){
-          expect(board.near([0, 0], [0, 1])).toBe(true);
-          expect(board.near([0, 0], [0, -1])).toBe(true);
-          expect(board.near([-1, 0], [0, 1])).toBe(false);
-          expect(board.near([-14, 7], [-13, 7])).toBe(true);
-          expect(board.near([-14, 8], [13, 8])).toBe(false);
-        });
-      });
-
-      describe('.walkable', function (){
-        beforeEach(function (){
-          board.tiles = {
-            '0:0': test_tiles.n,
-            '0:1': test_tiles.sw,
-            '-1:1': test_tiles.se,
-            '-1:0': test_tiles.ns,
-          };
-        });
-
-        it('should return true if two tiles have exits facing each other', function(){
-          expect(board.walkable([0,0], [0, 1])).toBe(true);
-          expect(board.walkable([0,1], [-1, 1])).toBe(true);
-          expect(board.walkable([0,0], [-1, 0])).toBe(false);
-          expect(board.walkable([-1,1], [0, 0])).toBe(false);
-          expect(board.walkable([-1,2], [0, 0])).toBe(false);
-        });
-      });
-
       describe('.place_tile', function (){
         beforeEach(function (){
           board.initalize();
@@ -107,6 +78,44 @@ describe('Game', function() {
 
           expect(board.tiles['0:0']).toBe(tile);
           expect(board.tiles['1:0']).toBe(board.placeholders.indoor);
+        });
+
+        it('should not overwrite existing tiles with placeholders', function(){
+          board.place_tile([0, 0], test_tiles.n);
+          expect(board.tiles['0:0']).toBe(test_tiles.n);
+          expect(board.tiles['0:1']).toBe(board.placeholders.indoor);
+
+          board.place_tile([0, 1], test_tiles.s);
+          expect(board.tiles['0:1']).toBe(test_tiles.s);
+          expect(board.tiles['0:0']).toBe(test_tiles.n);
+        });
+
+      });
+
+      describe('.near', function (){
+        it('should return true if two points are next to one another', function(){
+          expect(board.near([0, 0], [0, 1])).toBe(true);
+          expect(board.near([0, 0], [0, -1])).toBe(true);
+          expect(board.near([-1, 0], [0, 1])).toBe(false);
+          expect(board.near([-14, 7], [-13, 7])).toBe(true);
+          expect(board.near([-14, 8], [13, 8])).toBe(false);
+        });
+      });
+
+      describe('.walkable', function (){
+        beforeEach(function (){
+          board.place_tile([0,0], test_tiles.n);
+          board.place_tile([0,1], test_tiles.sw);
+          board.place_tile([-1,1], test_tiles.se);
+          board.place_tile([-1,0], test_tiles.ns);
+        });
+
+        it('should return true if two tiles have exits facing each other', function(){
+          expect(board.walkable([0,0], [0, 1])).toBe(true);
+          expect(board.walkable([0,1], [-1, 1])).toBe(true);
+          expect(board.walkable([0,0], [-1, 0])).toBe(false);
+          expect(board.walkable([-1,1], [0, 0])).toBe(false);
+          expect(board.walkable([-1,2], [0, 0])).toBe(false);
         });
       });
     });
