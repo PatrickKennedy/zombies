@@ -1,2 +1,4 @@
-.view-tile(ng-class="{placeable: ctrl.tile.placeable, present: ctrl.tile}")
+.view-tile(
+  ng-class="{placeable: ctrl.tile.placeable, present: ctrl.tile}"
   .name {{ ctrl.tile.name }}
+  .exit(ng-repeat="exit in ctrl.tile.exits" class="exit-{{ exit }}")

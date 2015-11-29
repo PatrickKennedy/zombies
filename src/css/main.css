@@ -25,6 +25,11 @@ zombies-view {
   box-sizing: border-box;
   width: 250px;
   height: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
   background: rgba(0,0,0,.5);
   border: 1px solid transparent;
 }
@@ -41,6 +46,45 @@ zombies-view {
   border-color: black;
 }
 
+.view-tile .name {
+  font-size: 18pt;
+}
+
+.exit-0 {
+  height: 15px;
+  width: 33%;
+  background-color: rgba(0,0,0,.75);
+  top: 0;
+  left: 33%;
+  position: absolute;
+}
+
+.exit-1 {
+  height: 33%;
+  width: 15px;
+  background-color: rgba(0,0,0,.75);
+  right: 0;
+  top: 33%;
+  position: absolute;
+}
+
+.exit-2 {
+  height: 15px;
+  width: 33%;
+  background-color: rgba(0,0,0,.75);
+  bottom: 0;
+  left: 33%;
+  position: absolute;
+}
+
+.exit-3 {
+  height: 33%;
+  width: 15px;
+  background-color: rgba(0,0,0,.75);
+  left: 0;
+  top: 33%;
+  position: absolute;
+}
 zombies-dev-draw {
   width: 750px;
   background: rgba(0,0,0,.5);
