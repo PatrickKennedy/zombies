@@ -50,79 +50,54 @@ zombies-view {
   font-size: 18pt;
 }
 
-.exit-0 {
-  height: 15px;
-  width: 33%;
+.exit {
   background-color: rgba(0,0,0,.75);
-  top: 0;
-  left: 33%;
   position: absolute;
+}
+
+.exit-0 {
+  height: 15px;  width: 33%;
+  top: 0;  left: 33%;
 }
 
 .exit-1 {
-  height: 33%;
-  width: 15px;
-  background-color: rgba(0,0,0,.75);
-  right: 0;
-  top: 33%;
-  position: absolute;
+  height: 33%;  width: 15px;
+  right: 0;  top: 33%;
 }
 
 .exit-2 {
-  height: 15px;
-  width: 33%;
-  background-color: rgba(0,0,0,.75);
-  bottom: 0;
-  left: 33%;
-  position: absolute;
+  height: 15px;  width: 33%;
+  bottom: 0;  left: 33%;
 }
 
 .exit-3 {
-  height: 33%;
-  width: 15px;
-  background-color: rgba(0,0,0,.75);
-  left: 0;
-  top: 33%;
-  position: absolute;
+  height: 33%;  width: 15px;
+  left: 0;  top: 33%;
 }
 
 .hover-target {
-  width: 0;
-	height: 0;
+  background-color: rgba(0,0,0,.75);
   position: absolute;
-  border-style: solid;
-  border-color: transparent transparent transparent transparent;
 }
 
 .hover-target-0 {
-  top: 0;
-  left: 0;
-  border-width: 0 0 125px 125px;
-  border-top: 125px solid rgba(0,0,0,.75);
+  height: 50px;
+  top: 0;  left: 50px; right: 50px;
 }
 
 .hover-target-1 {
-  bottom: 0;
-  right: 0;
-  border-bottom: 125px solid transparent;
-  border-top: 125px solid transparent;
-  border-right: 125px solid rgba(0,0,0,.75);
+  width: 50px;
+  right: 0;  top: 50px; bottom: 50px;
 }
 
 .hover-target-2 {
-  bottom: 0;
-  right: 0;
-  border-left: 125px solid transparent;
-  border-right: 125px solid transparent;
-  border-bottom: 125px solid rgba(0,0,0,.75);
+  height: 50px;
+  bottom: 0;  left: 50px; right: 50px;
 }
 
 .hover-target-3 {
-  top: 0;
-  left: 0;
-  border-bottom: 125px solid transparent;
-  border-top: 125px solid transparent;
-  border-left: 125px solid rgba(0,0,0,.75);
+  width: 50px;
+  left: 0;  top: 50px; bottom: 50px;
 }
 
 zombies-dev-draw {
