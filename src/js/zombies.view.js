@@ -34,6 +34,8 @@
       [null, null, null],
     ];
 
+    ctrl.point_map = {};
+
     ctrl.initialize = function (){};
 
     ctrl.update_view = function (){
@@ -45,21 +47,26 @@
           ;
 
       for (var y = 0; y < radius; y++) {
+        // the board uses a standard cartesian coordinates system
+        // this is possible because objects are referenced by keys rather
+        // than stored in an array, but an unfortunate side effect is that
+        // the coordinates sytems don't match in the y-axis.
+        var flip_y = radius-1-y
+            , row = ctrl.view_tiles[flip_y]
+            ;
         for (var x = 0; x < radius; x++) {
-          // the board uses a standard cartesian coordinates system
-          // this is possible because objects are referenced by keys rather
-          // than stored in an array, but an unfortunate side effect is that
-          // the coordinates sytems don't match in the y-axis.
-          var flip_y = radius-1-y;
-          ctrl.view_tiles[flip_y][x] = game.board.tiles[(x+x_offset-diam) +":"+ (y+y_offset-diam)];
+         row[x] = game.board.tiles[(x+x_offset-diam) +":"+ (y+y_offset-diam)];
+         ctrl.point_map[x +":"+ flip_y] = [(x+x_offset-diam), (y+y_offset-diam)];
         }
       }
     };
 
     $scope.$watch(
-      function () { return game.board.tiles; },
+      // tiles can't be removed in Zombies
+      function () { return Object.keys(game.board.tiles).length; },
       function(new_value, old_value) {
         if (new_value != old_value)
+          console.log("Tiles dirty");
           ctrl.update_view();
       }
     );
@@ -70,7 +77,9 @@
     return {
       scope: {},
       bindToController: {
-        tile: '=ngModel',
+        tile: '=',
+        view: '=',
+        coord: '@',
       },
       templateUrl: 'tile.jade',
       controller: 'ZombiesTileCtrl',
@@ -78,8 +87,18 @@
     };
   }
 
-  ZombiesTileCtrl.$inject = ['$scope'];
-  function ZombiesTileCtrl($scope) {
+  ZombiesTileCtrl.$inject = ['GameManager'];
+  function ZombiesTileCtrl(game) {
     var ctrl = this;
+    ctrl.place_tile = function() {
+      if (!game.hand)
+        return;
+      console.log("attempting to place tile at ", ctrl.coord, ctrl.view.point_map[ctrl.coord]);
+      game.board.place_tile(ctrl.view.point_map[ctrl.coord], game.hand);
+    };
+
+    ctrl.rotate_preview = function(rotation) {
+      console.log(rotation);
+    };
   }
 }(angular));

@@ -1,2 +1,6 @@
-.tile-card(ng-repeat="card in ctrl.deck.stock" ng-class="{ 'top-card': $first }")
+.tile-card(
+  ng-repeat="card in ctrl.deck.stock"
+  ng-class="{ 'top-card': $first }"
+  ng-click="ctrl.draw()"
+)
   {{ $index }}

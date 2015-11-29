@@ -1,3 +1,8 @@
 #playingfield(ng-controller="ZombiesViewCtrl as ctrl")
   .playingfield-row(ng-repeat="row in ctrl.view_tiles")
-    zombie-tile(ng-repeat="view_tile in row track by $index" ng-model="view_tile")
+    zombie-tile(
+      ng-repeat="view_tile in row track by $index"
+      tile="view_tile"
+      view="ctrl"
+      coord="{{$index}}:{{$parent.$index}}"
+    )

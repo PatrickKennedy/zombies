@@ -23,9 +23,13 @@
     };
   }
 
-  ZombiesTileDrawCtrl.$inject = ['$scope'];
-  function ZombiesTileDrawCtrl($scope) {
+  ZombiesTileDrawCtrl.$inject = ['GameManager'];
+  function ZombiesTileDrawCtrl(game) {
     var ctrl = this;
+    ctrl.draw = function (){
+      console.log('drawing card');
+      game.hand = ctrl.deck.draw();
+    };
   }
 
 
@@ -41,8 +45,12 @@
     };
   }
 
-  ZombiesDevDrawCtrl.$inject = ['$scope'];
-  function ZombiesDevDrawCtrl($scope) {
+  ZombiesDevDrawCtrl.$inject = ['GameManager'];
+  function ZombiesDevDrawCtrl(game) {
     var ctrl = this;
+    ctrl.draw = function (){
+      console.log('drawing card');
+      game.hand = ctrl.deck.draw();
+    };
   }
 }(angular));

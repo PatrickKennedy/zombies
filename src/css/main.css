@@ -85,6 +85,46 @@ zombies-view {
   top: 33%;
   position: absolute;
 }
+
+.hover-target {
+  width: 0;
+	height: 0;
+  position: absolute;
+  border-style: solid;
+  border-color: transparent transparent transparent transparent;
+}
+
+.hover-target-0 {
+  top: 0;
+  left: 0;
+  border-width: 0 0 125px 125px;
+  border-top: 125px solid rgba(0,0,0,.75);
+}
+
+.hover-target-1 {
+  bottom: 0;
+  right: 0;
+  border-bottom: 125px solid transparent;
+  border-top: 125px solid transparent;
+  border-right: 125px solid rgba(0,0,0,.75);
+}
+
+.hover-target-2 {
+  bottom: 0;
+  right: 0;
+  border-left: 125px solid transparent;
+  border-right: 125px solid transparent;
+  border-bottom: 125px solid rgba(0,0,0,.75);
+}
+
+.hover-target-3 {
+  top: 0;
+  left: 0;
+  border-bottom: 125px solid transparent;
+  border-top: 125px solid transparent;
+  border-left: 125px solid rgba(0,0,0,.75);
+}
+
 zombies-dev-draw {
   width: 750px;
   background: rgba(0,0,0,.5);

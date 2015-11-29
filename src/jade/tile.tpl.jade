@@ -1,4 +1,14 @@
 .view-tile(
   ng-class="{placeable: ctrl.tile.placeable, present: ctrl.tile}"
+  ng-click="ctrl.place_tile()"
+  ng-mouseenter="ctrl.preview_tile()"
+  ng-mouseexit="ctrl.remove_preview()"
+)
   .name {{ ctrl.tile.name }}
   .exit(ng-repeat="exit in ctrl.tile.exits" class="exit-{{ exit }}")
+  dev(ng-show="ctrl.tile.placeable")
+    .hover-target(
+      ng-repeat="exit in [0, 1, 2, 3]"
+      class="hover-target-{{ exit }}"
+      ng-mouseover="ctrl.rotate_preview(exit)"
+    )
