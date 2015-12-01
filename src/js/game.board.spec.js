@@ -68,7 +68,7 @@ describe('Game', function() {
           board.place_tile([0, 0], tile);
 
           expect(board.tiles['0:0']).toBe(tile);
-          expect(board.tiles['0:1']).toBe(board.placeholders.indoor);
+          expect(board.tiles['0:-1']).toBe(board.placeholders.indoor);
         });
 
         it('should place the rotated tile in the board and update surrounding tiles', function(){
@@ -83,10 +83,10 @@ describe('Game', function() {
         it('should not overwrite existing tiles with placeholders', function(){
           board.place_tile([0, 0], test_tiles.n);
           expect(board.tiles['0:0']).toBe(test_tiles.n);
-          expect(board.tiles['0:1']).toBe(board.placeholders.indoor);
+          expect(board.tiles['0:-1']).toBe(board.placeholders.indoor);
 
-          board.place_tile([0, 1], test_tiles.s);
-          expect(board.tiles['0:1']).toBe(test_tiles.s);
+          board.place_tile([0, -1], test_tiles.s);
+          expect(board.tiles['0:-1']).toBe(test_tiles.s);
           expect(board.tiles['0:0']).toBe(test_tiles.n);
         });
 
@@ -105,17 +105,17 @@ describe('Game', function() {
       describe('.walkable', function (){
         beforeEach(function (){
           board.place_tile([0,0], test_tiles.n);
-          board.place_tile([0,1], test_tiles.sw);
-          board.place_tile([-1,1], test_tiles.se);
+          board.place_tile([0,-1], test_tiles.sw);
+          board.place_tile([-1,-1], test_tiles.se);
           board.place_tile([-1,0], test_tiles.ns);
         });
 
         it('should return true if two tiles have exits facing each other', function(){
-          expect(board.walkable([0,0], [0, 1])).toBe(true);
-          expect(board.walkable([0,1], [-1, 1])).toBe(true);
+          expect(board.walkable([0,0], [0, -1])).toBe(true);
+          expect(board.walkable([0,-1], [-1, -1])).toBe(true);
           expect(board.walkable([0,0], [-1, 0])).toBe(false);
-          expect(board.walkable([-1,1], [0, 0])).toBe(false);
-          expect(board.walkable([-1,2], [0, 0])).toBe(false);
+          expect(board.walkable([-1,-1], [0, 0])).toBe(false);
+          expect(board.walkable([-1,-2], [0, 0])).toBe(false);
         });
       });
     });

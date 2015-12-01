@@ -27,13 +27,14 @@
     // Viewport represented by x,y,r
     // (x,y) - the center point of the view
     // r - the radius of the view
-    ctrl.viewport = [0,1,3];
+    ctrl.viewport = [0,-1,3];
     ctrl.view_tiles = [
       [null, null, null],
       [null, null, null],
       [null, null, null],
     ];
 
+    ctrl.preview_tiles = {};
     ctrl.point_map = {};
 
     ctrl.initialize = function (){};
@@ -47,16 +48,11 @@
           ;
 
       for (var y = 0; y < radius; y++) {
-        // the board uses a standard cartesian coordinates system
-        // this is possible because objects are referenced by keys rather
-        // than stored in an array, but an unfortunate side effect is that
-        // the coordinates sytems don't match in the y-axis.
-        var flip_y = radius-1-y
-            , row = ctrl.view_tiles[flip_y]
-            ;
+        var row = ctrl.view_tiles[y];
         for (var x = 0; x < radius; x++) {
-         row[x] = game.board.tiles[(x+x_offset-diam) +":"+ (y+y_offset-diam)];
-         ctrl.point_map[x +":"+ flip_y] = [(x+x_offset-diam), (y+y_offset-diam)];
+          var coord = (x+x_offset-diam) +":"+ (y+y_offset-diam);
+          row[x] = ctrl.preview_tiles[coord] || game.board.tiles[coord];
+          ctrl.point_map[x +":"+ y] = [(x+x_offset-diam), (y+y_offset-diam)];
         }
       }
     };
