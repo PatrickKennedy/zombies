@@ -28,7 +28,7 @@
     var ctrl = this;
     ctrl.draw = function (){
       console.log('drawing card');
-      game.hand = ctrl.deck.draw();
+      game.state.hand = ctrl.deck.draw();
     };
   }
 
@@ -50,7 +50,7 @@
     var ctrl = this;
     ctrl.draw = function (){
       console.log('drawing card');
-      game.hand = ctrl.deck.draw();
+      game.state.hand = ctrl.deck.draw();
     };
   }
 }(angular));

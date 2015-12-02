@@ -87,10 +87,10 @@
   function ZombiesTileCtrl(game) {
     var ctrl = this;
     ctrl.place_tile = function() {
-      if (!game.hand)
+      if (!game.state.hand)
         return;
       console.log("attempting to place tile at ", ctrl.coord, ctrl.view.point_map[ctrl.coord]);
-      game.board.place_tile(ctrl.view.point_map[ctrl.coord], game.hand);
+      game.board.place_tile(ctrl.view.point_map[ctrl.coord], game.state.hand);
     };
 
     ctrl.rotate_preview = function(rotation) {
