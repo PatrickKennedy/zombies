@@ -34,7 +34,7 @@
       // the board doesn't have a state object but I want to keep defaults
       // externally configurable.
       // todo: build proper initalization or actually use a state object. fml.
-      var defaults = Object.clone(ctrl.defaults, true);
+      var defaults = angular.copy(ctrl.defaults);
       ctrl.tiles = defaults.tiles;
       ctrl.actor = defaults.actor;
       ctrl.events = defaults.events;

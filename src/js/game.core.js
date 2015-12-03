@@ -59,7 +59,7 @@
     ctrl.board = board;
 
     ctrl.initalize = function () {
-      ctrl.state = Object.clone(ctrl.defaults, true);
+      ctrl.state = angular.copy(ctrl.defaults);
       ctrl.board.initalize();
     };
 
