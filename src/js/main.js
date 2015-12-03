@@ -45,6 +45,7 @@
     app.initalize_game = function(){
       console.log('initalizing game');
       app.initalize_decks();
+      $scope.$broadcast('initialize_game');
       game.initalize();
       game.board.place_tile([0,0], game.decks.indoor.draw());
     };
