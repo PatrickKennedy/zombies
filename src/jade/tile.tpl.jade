@@ -2,7 +2,7 @@
   ng-class="{placeable: ctrl.tile.placeable, present: ctrl.tile}"
   ng-click="ctrl.place_tile()"
   ng-mouseenter="ctrl.preview_tile()"
-  ng-mouseexit="ctrl.remove_preview()"
+  ng-mouseleave="ctrl.remove_preview()"
 )
   .name {{ ctrl.tile.name }}
   .exit(ng-repeat="exit in ctrl.tile.exits" class="exit-{{ exit }}")
