@@ -23,6 +23,7 @@
     ctrl.defaults = {
       tiles: {},
       actor: '0:0',
+      events: 0,
     };
 
     ctrl.tiles = {};
@@ -36,6 +37,7 @@
       var defaults = Object.clone(ctrl.defaults, true);
       ctrl.tiles = defaults.tiles;
       ctrl.actor = defaults.actor;
+      ctrl.events = defaults.events;
     };
 
     ctrl.move_actor = function (point) {
@@ -75,6 +77,7 @@
           ctrl.tiles[exit_coord] = ctrl.placeholders.indoor;
       }
 
+      ctrl.events += 1;
       return true;
     };
 
