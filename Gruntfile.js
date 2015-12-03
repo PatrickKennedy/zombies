@@ -58,6 +58,25 @@ module.exports = function(grunt) {
       }
     },
 
+    concurrent: {
+      serve_delta: {
+        tasks: ['connect', 'delta'],
+        options: {
+          logConcurrentOutput: true,
+        }
+      }
+    },
+
+    connect: {
+      server: {
+        options: {
+          port: 8000,
+          base: '.',
+          keepalive: true,
+        }
+      }
+    },
+
     copy: {
       build_app_assets: {
         files: [
@@ -361,7 +380,7 @@ module.exports = function(grunt) {
    * before watching for changes.
    */
   grunt.renameTask('watch', 'delta');
-  grunt.registerTask('watch', ['build', 'karma:unit', 'delta']);
+  grunt.registerTask('watch', ['build', 'karma:unit', 'concurrent:serve_delta']);
 
   /**
    * The default task is to build and compile.
