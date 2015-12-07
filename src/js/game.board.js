@@ -65,7 +65,7 @@
 
       ctrl.tiles[coord] = tile;
       tile.exits.forEach(function(exit){
-        var vector = tile.get_vector(exit)
+        var vector = tile.vectors[exit]
             , exit_point = [
               point[0] + vector[0],
               point[1] + vector[1],
@@ -122,6 +122,7 @@
   }
 
   function BoardTile() {
+    // xxx: vectors either need to be defined on object or set as a read-only property
     var vectors = [
           [0, -1],  // 0 = North
           [1, 0],  // 1 = East
@@ -186,11 +187,6 @@
 
       this.vectors = vectors;
       this.vector_map = vector_map;
-    };
-
-    Tile.prototype.get_vector = function (v) {
-      v += 4; // To allow for CCW rotation up to 360 degrees CCW
-      return this.vectors[(v + this.rotation) % 4];
     };
 
     Tile.prototype.get_exit = function (coord) {
