@@ -64,8 +64,8 @@
         return false;
 
       ctrl.tiles[coord] = tile;
-      for (var i = 0; i < tile.exits.length; i++) {
-        var vector = tile.get_vector(tile.exits[i])
+      tile.exits.forEach(function(exit){
+        var vector = tile.get_vector(exit)
             , exit_point = [
               point[0] + vector[0],
               point[1] + vector[1],
@@ -75,7 +75,7 @@
         exit_tile = ctrl.tiles[exit_coord];
         if (!exit_tile)
           ctrl.tiles[exit_coord] = ctrl.placeholders.indoor;
-      }
+      }, this);
 
       ctrl.events += 1;
       return true;
