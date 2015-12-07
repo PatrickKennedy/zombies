@@ -36,7 +36,7 @@ describe('Game', function() {
         ];
         var test_tiles = {};
         dirs.forEach(function(dir, index){
-          test_tiles[dir] = new Tile({ exits: exits[index] });
+          test_tiles[dir] = new Tile({ id: dir, exits: exits[index] });
         });
 
         return test_tiles;
@@ -121,11 +121,10 @@ describe('Game', function() {
         });
 
         it('should place the rotated tile in the board and update surrounding tiles', function(){
-          var tile = test_tiles.n;
-          tile.rotation = 1;
-          board.place_tile([0, 0], tile);
+          test_tiles.n.rotation = 1;
+          board.place_tile([0, 0], test_tiles.n);
 
-          expect(board.tiles['0:0']).toBe(tile);
+          expect(board.tiles['0:0']).toBe(test_tiles.n);
           expect(board.tiles['1:0']).toBe(board.placeholders.indoor);
         });
 
@@ -178,8 +177,8 @@ describe('Game', function() {
           test_tiles.nw.rotation = 3;
           board.place_tile([0,-1], test_tiles.nw);
 
-          test_tiles.ne.rotation = -1;
-          board.place_tile([-1,-1], test_tiles.ne);
+          test_tiles.w.rotation = -1;
+          board.place_tile([-1,-1], test_tiles.w);
 
           test_tiles.ew.rotation = 1;
           board.place_tile([-1,0], test_tiles.ew);
@@ -187,7 +186,7 @@ describe('Game', function() {
 
         it('should return true if two tiles have exits facing each other', function(){
           expect(board.walkable([0,0], [0, -1])).toBe(true);
-          expect(board.walkable([0,-1], [-1, -1])).toBe(true);
+          expect(board.walkable([0,-1], [-1, -1])).toBe(false);
           expect(board.walkable([0,0], [-1, 0])).toBe(false);
           expect(board.walkable([-1,-1], [0, 0])).toBe(false);
           expect(board.walkable([-1,-2], [0, 0])).toBe(false);
