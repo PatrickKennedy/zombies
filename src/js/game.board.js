@@ -139,11 +139,50 @@
     var Tile = function(config) {
       this.id = config.id;
       this.name = config.name;
-      this.exits = config.exits;
       this.text = config.text;
       this.callbacks = config.callbacks;
 
+      // ensure rotations are always a value between 0 and 3
+      var _rotation;
+      Object.defineProperty(this, "rotation", {
+        get: function () {
+          return _rotation;
+        },
+        set: function (new_rotation) {
+          _rotation = (
+            new_rotation < 0 ?
+              // convert CCW rotations to CW rotation
+              new_rotation & 1 ?
+                // odd rotations need to be mirrored
+                Math.abs(new_rotation) + 2 :
+                // even rotations always have the same result
+                Math.abs(new_rotation) :
+              new_rotation
+          ) % 4;
+        },
+        enumerable: true,
+      });
       this.rotation = config.rotation || 0;
+
+
+      // pre-compute exits for each rotation
+      var _exits = [];
+      Object.defineProperty(this, "exits", {
+        get: function () {
+          return _exits[_rotation];
+        },
+        set: function (new_exits) {
+          _exits = [0, 1, 2, 3].map(function (rotation) {
+            var tmp = new_exits.map(function(exit) {
+              return (exit + rotation) % 4;
+            });
+            tmp.sort();
+            return tmp;
+          });
+        },
+        enumerable: true,
+      });
+      this.exits = config.exits;
 
       this.vectors = vectors;
       this.vector_map = vector_map;
