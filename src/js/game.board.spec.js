@@ -1,47 +1,95 @@
 describe('Game', function() {
   describe('Board', function() {
+    var board
+        , Tile
+        , example_tiles
+        , test_tiles
+        ;
+
     beforeEach(module('game.board'));
 
+    beforeEach(inject(function(BoardManager, BoardTile) {
+      board = BoardManager;
+      Tile = BoardTile;
+      example_tiles = {
+          n:  new Tile({ exits: [0], }),
+          ne: new Tile({ exits: [0, 1], }),
+          e:  new Tile({ exits: [1], }),
+          se: new Tile({ exits: [1, 2], }),
+          s:  new Tile({ exits: [2], }),
+          sw: new Tile({ exits: [2, 3], }),
+          w:  new Tile({ exits: [3], }),
+          nw: new Tile({ exits: [0, 3], }),
+          ns: new Tile({ exits: [0, 2], }),
+          ew: new Tile({ exits: [1, 3], }),
+          "new": new Tile({ exits: [0, 2, 3], }),
+          nesw: new Tile({ exits: [0, 1, 2, 3], }),
+        };
+      this.generate_tiles = function() {
+        var dirs = [
+          'n', 'ne', 'e', 'se', 's', 'sw',
+          'w', 'nw', 'ns', 'ew', 'new', 'nesw'
+        ];
+        var exits = [
+          [0], [0, 1], [1], [1, 2], [2], [2, 3],
+          [3], [0, 3], [0, 2], [1, 3], [0, 2, 3], [0, 1, 2, 3],
+        ];
+        var test_tiles = {};
+        dirs.forEach(function(dir, index){
+          test_tiles[dir] = new Tile({ exits: exits[index] });
+        });
+
+        return test_tiles;
+      };
+    }));
+
+    it('should have a BoardManager', function() {
+      expect(board).toBeDefined();
+    });
+    it('should have a BoardTile', function() {
+      expect(Tile).toBeDefined();
+    });
+
     describe('Tile', function() {
+      beforeEach(function (){
+        test_tiles = this.generate_tiles();
+      });
 
-      var tile;
-      beforeEach(inject(function(BoardTile) {
-        tile = BoardTile;
-      }));
+      describe('.exits', function() {
+        it('should return exits rotated by tile.rotations', function(){
+          expect(new Tile({ exits: [0], rotation: 1 }).exits).toEqual([1]);
+          expect(new Tile({ exits: [0, 1], rotation: 2 }).exits).toEqual([2, 3]);
+          expect(new Tile({ exits: [0, 2], rotation: 3 }).exits).toEqual([1, 3]);
+          expect(new Tile({ exits: [0, 3], rotation: 4 }).exits).toEqual([0, 3]);
+        });
 
-      it('should have a BoardTile', function() {
-        expect(tile).toBeDefined();
+        it('should update exits when tile.rotations is assigned post-creation', function(){
+          test_tiles.s.rotation = -2;
+          expect(test_tiles.s.exits).toEqual([0]);
+
+          test_tiles.nw.rotation = 3;
+          expect(test_tiles.nw.exits).toEqual([2, 3]);
+
+          test_tiles.ne.rotation = -1;
+          expect(test_tiles.ne.exits).toEqual([0, 3]);
+
+          test_tiles.ew.rotation = 1;
+          expect(test_tiles.ew.exits).toEqual([0, 2]);
+        });
+
+        it('should allow nevative rotations', function(){
+          expect(new Tile({ exits: [0], rotation: -1 }).exits).toEqual([3]);
+          expect(new Tile({ exits: [0, 1], rotation: -2 }).exits).toEqual([2, 3]);
+          expect(new Tile({ exits: [0, 2], rotation: -3 }).exits).toEqual([1, 3]);
+          expect(new Tile({ exits: [0, 3], rotation: -4 }).exits).toEqual([0, 3]);
+        });
       });
 
     });
 
     describe('Manager', function() {
-      var board
-          , Tile
-          , test_tiles
-          ;
-
-      beforeEach(inject(function(BoardManager, BoardTile) {
-        board = BoardManager;
-        Tile = BoardTile;
-        test_tiles = {
-            n:  new BoardTile({ exits: [0], }),
-            ne: new BoardTile({ exits: [0, 1], }),
-            e:  new BoardTile({ exits: [1], }),
-            se: new BoardTile({ exits: [1, 2], }),
-            s:  new BoardTile({ exits: [2], }),
-            sw: new BoardTile({ exits: [2, 3], }),
-            w:  new BoardTile({ exits: [3], }),
-            ns: new BoardTile({ exits: [0, 2], }),
-            ew: new BoardTile({ exits: [1, 3], }),
-            "new": new BoardTile({ exits: [0, 2, 3], }),
-            nesw: new BoardTile({ exits: [0, 1, 2, 3], }),
-        };
-      }));
-
-      it('should have a BoardManager', function() {
-        expect(board).toBeDefined();
-        expect(Tile).toBeDefined();
+      beforeEach(function (){
+        test_tiles = this.generate_tiles();
       });
 
       describe('.coord', function (){
@@ -61,6 +109,7 @@ describe('Game', function() {
       describe('.place_tile', function (){
         beforeEach(function (){
           board.initalize();
+          test_tiles = this.generate_tiles();
         });
 
         it('should place the tile in the board and update surrounding tiles', function(){
@@ -118,6 +167,33 @@ describe('Game', function() {
           expect(board.walkable([-1,-2], [0, 0])).toBe(false);
         });
       });
+
+      describe('.walkable /w rotation', function (){
+        beforeEach(function (){
+        test_tiles = this.generate_tiles();
+
+          test_tiles.s.rotation = -2;
+          board.place_tile([0,0], test_tiles.s);
+
+          test_tiles.nw.rotation = 3;
+          board.place_tile([0,-1], test_tiles.nw);
+
+          test_tiles.ne.rotation = -1;
+          board.place_tile([-1,-1], test_tiles.ne);
+
+          test_tiles.ew.rotation = 1;
+          board.place_tile([-1,0], test_tiles.ew);
+        });
+
+        it('should return true if two tiles have exits facing each other', function(){
+          expect(board.walkable([0,0], [0, -1])).toBe(true);
+          expect(board.walkable([0,-1], [-1, -1])).toBe(true);
+          expect(board.walkable([0,0], [-1, 0])).toBe(false);
+          expect(board.walkable([-1,-1], [0, 0])).toBe(false);
+          expect(board.walkable([-1,-2], [0, 0])).toBe(false);
+        });
+      });
+
     });
   });
 });
