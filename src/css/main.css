@@ -30,16 +30,16 @@ zombies-view {
   justify-content: center;
   align-items: center;
   position: relative;
-  background: rgba(0,0,0,.5);
-  border: 1px solid transparent;
+  background: rgba(33, 33, 33, 1);
+  border: 10px solid black;
 }
 
 .view-tile.present {
-  background: rgba(128, 64, 0, 0.5);
+  background: rgba(97, 65, 33, 1);
 }
 
 .view-tile.placeable {
-  background: rgba(255, 255, 0, 0.5);
+  background: rgba(160, 160, 33, 1);
 }
 
 .view-tile:hover {
@@ -51,33 +51,37 @@ zombies-view {
 }
 
 .exit {
-  background-color: rgba(0,0,0,.75);
+  background-color: rgba(97, 65, 33, 1);
   position: absolute;
 }
 
 .exit-0 {
   height: 15px;  width: 33%;
-  top: 0;  left: 33%;
+  top: -10px;  left: 33%;
 }
 
 .exit-1 {
   height: 33%;  width: 15px;
-  right: 0;  top: 33%;
+  right: -10px;  top: 33%;
 }
 
 .exit-2 {
   height: 15px;  width: 33%;
-  bottom: 0;  left: 33%;
+  bottom: -10px;  left: 33%;
 }
 
 .exit-3 {
   height: 33%;  width: 15px;
-  left: 0;  top: 33%;
+  left: -10px;  top: 33%;
 }
 
 .hover-target {
   background-color: rgba(0,0,0,.75);
   position: absolute;
+}
+
+.preview .hover-target {
+  background-color: transparent;
 }
 
 .hover-target-0 {
