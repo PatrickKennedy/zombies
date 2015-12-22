@@ -186,7 +186,7 @@ describe('Game', function() {
         it('should not place the tile in the board if there is no connection', function(){
           board.place_tile([0, 0], test_tiles.n);
 
-					expect(function(){ board.place_tile([0, 1], test_tiles.s); }).toThrowError("not a placeable cell");
+          expect(function(){ board.place_tile([0, 1], test_tiles.s); }).toThrowError("not a placeable cell");
           expect(board.tiles['0:1']).not.toBe(test_tiles.s);
         });
 

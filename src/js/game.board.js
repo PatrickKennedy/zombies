@@ -63,9 +63,9 @@
         return true;
 
       // every tile that must be placed in an acceptable location
-			// a tile must exist in the location
-			if (!enter_tile)
-				throw new Error('not a placeable cell');
+      // a tile must exist in the location
+      if (!enter_tile)
+        throw new Error('not a placeable cell');
 
 
       if (!enter_tile.placeable)
@@ -94,13 +94,13 @@
       return true;
     };
 
-		ctrl.assign_tile = function (point, tile) {
-			var coord = ctrl.coord(point)
+    ctrl.assign_tile = function (point, tile) {
+      var coord = ctrl.coord(point)
           , exit_coord
           , exit_tile
           ;
 
-			ctrl.tiles[coord] = tile;
+      ctrl.tiles[coord] = tile;
       tile.exits.forEach(function(exit){
         var vector = tile.vectors[exit]
             , exit_point = [
@@ -114,16 +114,16 @@
         if (!exit_tile)
           ctrl.tiles[exit_coord] = ctrl.placeholders.indoor;
       }, this);
-		};
+    };
 
     ctrl.place_tile = function (point, tile) {
-			try {
-				ctrl.placeable(point, tile);
-			} catch(e) {
-				// HACK:FIXME: Ignores information about error that should be conveyed
-				// to the end user.
-				throw e;
-			}
+      try {
+        ctrl.placeable(point, tile);
+      } catch(e) {
+        // HACK:FIXME: Ignores information about error that should be conveyed
+        // to the end user.
+        throw e;
+      }
 
       ctrl.assign_tile(point, tile);
       ctrl.events += 1;
