@@ -133,4 +133,12 @@ zombies-tile-draw .tile-card.top-card {
   height: 200px;
   background: rgba(128, 0, 64, 0.5);
   border: 1px solid gold;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+zombies-tile-draw .tile-card.top-card .deck-name {
+  font-size: 18pt;
 }

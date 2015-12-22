@@ -3,4 +3,6 @@
   ng-class="{ 'top-card': $first }"
   ng-click="ctrl.draw()"
 )
-  {{ $index }}
+  .deck-name(ng-if="$first")
+    | {{ ctrl.deck.name }}
+

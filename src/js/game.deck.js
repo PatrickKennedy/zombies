@@ -29,7 +29,8 @@
 
   DeckManager.$inject = [];
   function DeckManager() {
-    var Deck = function(stock) {
+    var Deck = function(stock, name) {
+      this.name = name;
       this.stock = stock;
       this.burn_pile = [];
     };
