@@ -42,6 +42,10 @@ zombies-view {
   background: rgba(160, 160, 33, 1);
 }
 
+.view-tile.preview {
+  cursor: pointer;
+}
+
 .view-tile:hover {
   border-color: black;
 }
@@ -137,6 +141,7 @@ zombies-tile-draw .tile-card.top-card {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 }
 
 zombies-tile-draw .tile-card.top-card .deck-name {
