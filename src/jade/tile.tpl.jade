@@ -4,7 +4,7 @@
   ng-mouseenter="ctrl.preview_tile()"
   ng-mouseleave="ctrl.remove_preview()"
 )
-  .name {{ ctrl.tile.name }}
+  .name(class="rotate-{{ctrl.tile.rotation}}") {{ ctrl.tile.name }}
   .exit(ng-repeat="exit in ctrl.tile.exits" class="exit-{{ exit }}")
   div(ng-show="ctrl.tile.placeable || ctrl.tile.preview")
     .hover-target(

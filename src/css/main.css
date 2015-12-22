@@ -20,6 +20,8 @@ zombies-view {
   display: flex;
 }
 
+
+/* Tile Styles */
 .view-tile {
   transition: border-color .25s ease-in-out;
   box-sizing: border-box;
@@ -147,3 +149,10 @@ zombies-tile-draw .tile-card.top-card {
 zombies-tile-draw .tile-card.top-card .deck-name {
   font-size: 18pt;
 }
+
+/* Utility Functions */
+.rotate-0 { transform: rotate(0deg); }
+.rotate-1 { transform: rotate(90deg); }
+.rotate-2 { transform: rotate(180deg); }
+.rotate-3 { transform: rotate(270deg); }
+
