@@ -22,17 +22,17 @@ describe('Game', function() {
           nw: new Tile({ exits: [0, 3], }),
           ns: new Tile({ exits: [0, 2], }),
           ew: new Tile({ exits: [1, 3], }),
-          "new": new Tile({ exits: [0, 2, 3], }),
+          new_: new Tile({ exits: [0, 1, 3], }),
           nesw: new Tile({ exits: [0, 1, 2, 3], }),
         };
       this.generate_tiles = function() {
         var dirs = [
           'n', 'ne', 'e', 'se', 's', 'sw',
-          'w', 'nw', 'ns', 'ew', 'new', 'nesw'
+          'w', 'nw', 'ns', 'ew', 'new_', 'nesw'
         ];
         var exits = [
           [0], [0, 1], [1], [1, 2], [2], [2, 3],
-          [3], [0, 3], [0, 2], [1, 3], [0, 2, 3], [0, 1, 2, 3],
+          [3], [0, 3], [0, 2], [1, 3], [0, 1, 3], [0, 1, 2, 3],
         ];
         var test_tiles = {};
         dirs.forEach(function(dir, index){
@@ -106,6 +106,62 @@ describe('Game', function() {
         });
       });
 
+      describe('.placeable', function (){
+        beforeEach(function (){
+          board.initalize();
+          test_tiles = this.generate_tiles();
+        });
+
+        it('should return true if no tiles are on the board', function(){
+          expect(board.placeable([0,0], test_tiles.n)).toBe(true);
+        });
+
+        it('should return false if not placing on top of a placable NullTile', function(){
+          board.place_tile([0,0], test_tiles.n);
+          expect(function(){ board.placeable([0,-2], test_tiles.s); }).toThrow();
+        });
+
+        it('should return false if tiles dont have matching exits', function(){
+          board.place_tile([0,0], test_tiles.n);
+          expect(function(){ board.placeable([0,-1], test_tiles.n); }).toThrow();
+        });
+
+        it('should return true if placing on top of a placeable NullTile with matching exits', function(){
+          board.place_tile([0,0], test_tiles.n);
+          expect(board.placeable([0,-1], test_tiles.s)).toBe(true);
+        });
+
+        it('should return false if tiles dont have matching exits after rotation', function(){
+          board.place_tile([0,0], test_tiles.n);
+          test_tiles.s.rotation = 1;
+          expect(function(){ board.placeable([0,-1], test_tiles.s); }).toThrow();
+        });
+
+        it('should return true if placing a rotated tile with matching exits', function(){
+          board.place_tile([0,0], test_tiles.n);
+          test_tiles.w.rotation = -1;
+          expect(board.placeable([0,-1], test_tiles.w)).toBe(true);
+        });
+
+        it('should return true if placing on top of a placeable NullTile with matching exits', function(){
+          test_tiles.new_.rotation = -1;
+          expect(board.placeable([0,0], test_tiles.new_)).toBe(true);
+          board.place_tile([0,0], test_tiles.new_);
+
+          test_tiles.nw.rotation = 3;
+          expect(board.placeable([0,-1], test_tiles.nw)).toBe(true);
+          board.place_tile([0,-1], test_tiles.nw);
+
+          test_tiles.sw.rotation = -1;
+          expect(board.placeable([-1,-1], test_tiles.sw)).toBe(true);
+          board.place_tile([-1,-1], test_tiles.sw);
+
+          test_tiles.ew.rotation = 1;
+          expect(board.placeable([-1,0], test_tiles.ew)).toBe(true);
+          board.place_tile([-1,0], test_tiles.ew);
+        });
+      });
+
       describe('.place_tile', function (){
         beforeEach(function (){
           board.initalize();
@@ -113,11 +169,25 @@ describe('Game', function() {
         });
 
         it('should place the tile in the board and update surrounding tiles', function(){
-          var tile = test_tiles.n;
-          board.place_tile([0, 0], tile);
+          board.place_tile([0, 0], test_tiles.n);
 
-          expect(board.tiles['0:0']).toBe(tile);
+          expect(board.tiles['0:0']).toBe(test_tiles.n);
           expect(board.tiles['0:-1']).toBe(board.placeholders.indoor);
+        });
+
+        it('should place the tile in the board if there is a connection', function(){
+          board.place_tile([0, 0], test_tiles.n);
+          board.place_tile([0, -1], test_tiles.s);
+
+          expect(board.tiles['0:0']).toBe(test_tiles.n);
+          expect(board.tiles['0:-1']).toBe(test_tiles.s);
+        });
+
+        it('should not place the tile in the board if there is no connection', function(){
+          board.place_tile([0, 0], test_tiles.n);
+
+					expect(function(){ board.place_tile([0, 1], test_tiles.s); }).toThrowError("not a placeable cell");
+          expect(board.tiles['0:1']).not.toBe(test_tiles.s);
         });
 
         it('should place the rotated tile in the board and update surrounding tiles', function(){
@@ -152,7 +222,7 @@ describe('Game', function() {
 
       describe('.walkable', function (){
         beforeEach(function (){
-          board.place_tile([0,0], test_tiles.n);
+          board.place_tile([0,0], test_tiles.nw);
           board.place_tile([0,-1], test_tiles.sw);
           board.place_tile([-1,-1], test_tiles.se);
           board.place_tile([-1,0], test_tiles.ns);
@@ -169,16 +239,16 @@ describe('Game', function() {
 
       describe('.walkable /w rotation', function (){
         beforeEach(function (){
-        test_tiles = this.generate_tiles();
+          test_tiles = this.generate_tiles();
 
-          test_tiles.s.rotation = -2;
-          board.place_tile([0,0], test_tiles.s);
+          test_tiles.new_.rotation = -1;
+          board.place_tile([0,0], test_tiles.new_);
 
           test_tiles.nw.rotation = 3;
           board.place_tile([0,-1], test_tiles.nw);
 
-          test_tiles.w.rotation = -1;
-          board.place_tile([-1,-1], test_tiles.w);
+          test_tiles.sw.rotation = -1;
+          board.place_tile([-1,-1], test_tiles.sw);
 
           test_tiles.ew.rotation = 1;
           board.place_tile([-1,0], test_tiles.ew);
@@ -186,7 +256,7 @@ describe('Game', function() {
 
         it('should return true if two tiles have exits facing each other', function(){
           expect(board.walkable([0,0], [0, -1])).toBe(true);
-          expect(board.walkable([0,-1], [-1, -1])).toBe(false);
+          expect(board.walkable([0,-1], [-1, -1])).toBe(true);
           expect(board.walkable([0,0], [-1, 0])).toBe(false);
           expect(board.walkable([-1,-1], [0, 0])).toBe(false);
           expect(board.walkable([-1,-2], [0, 0])).toBe(false);

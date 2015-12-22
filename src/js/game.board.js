@@ -50,20 +50,57 @@
         ctrl.actor = ctrl.coord(point);
     };
 
-    ctrl.place_tile = function (point, tile) {
-      // todo: add overwrite checks
+    ctrl.placeable = function (point, tile) {
       var coord = ctrl.coord(point)
           , enter_tile = ctrl.tiles[coord]
           , exit_coord
           , exit_tile
+          , connects
           ;
 
-      // if there are no tiles then enter_tile will always be false-y
-      // we want to let the first tile pass unquestioned
-      if (Object.keys(ctrl.tiles).length > 0 && !(enter_tile && enter_tile.placeable))
-        return false;
+      // the first tile is always placeable
+      if (Object.keys(ctrl.tiles).length === 0)
+        return true;
 
-      ctrl.tiles[coord] = tile;
+      // every tile that must be placed in an acceptable location
+			// a tile must exist in the location
+			if (!enter_tile)
+				throw new Error('not a placeable cell');
+
+
+      if (!enter_tile.placeable)
+        throw new Error('tile already exist');
+
+      // check to make sure the tile is reachable from the other tiles
+      // TODO: replace with a configurable handler
+      connects = tile.exits.some(function(exit) {
+        var vector = tile.vectors[exit]
+            , exit_point = [
+              point[0] + vector[0],
+              point[1] + vector[1],
+            ]
+            ;
+        exit_coord = ctrl.coord(exit_point);
+        exit_tile = ctrl.tiles[exit_coord];
+        if (exit_tile && exit_tile.has_exit)
+          return exit_tile.has_exit((exit + 2) % 4);
+
+        return false;
+      }, this);
+
+      if (!connects)
+        throw new Error('tile does not connect to another tile');
+
+      return true;
+    };
+
+		ctrl.assign_tile = function (point, tile) {
+			var coord = ctrl.coord(point)
+          , exit_coord
+          , exit_tile
+          ;
+
+			ctrl.tiles[coord] = tile;
       tile.exits.forEach(function(exit){
         var vector = tile.vectors[exit]
             , exit_point = [
@@ -73,11 +110,24 @@
             ;
         exit_coord = ctrl.coord(exit_point);
         exit_tile = ctrl.tiles[exit_coord];
+        // TODO: replace with some configurable handler
         if (!exit_tile)
           ctrl.tiles[exit_coord] = ctrl.placeholders.indoor;
       }, this);
+		};
 
+    ctrl.place_tile = function (point, tile) {
+			try {
+				ctrl.placeable(point, tile);
+			} catch(e) {
+				// HACK:FIXME: Ignores information about error that should be conveyed
+				// to the end user.
+				throw e;
+			}
+
+      ctrl.assign_tile(point, tile);
       ctrl.events += 1;
+
       return true;
     };
 
@@ -106,7 +156,6 @@
       // todo: add error throwing for better UI feedback
       if (!t1 || !t2 || !ctrl.near(p1, p2))
         return false;
-
       exit = t1.vector_map[dir_coord];
       return t1.has_exit(exit) && t2.has_exit((exit + 2) % 4);
     };
