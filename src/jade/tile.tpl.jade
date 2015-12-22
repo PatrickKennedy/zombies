@@ -1,12 +1,12 @@
 .view-tile(
-  ng-class="{placeable: ctrl.tile.placeable, present: ctrl.tile}"
+  ng-class="{placeable: ctrl.tile.placeable, present: ctrl.tile, preview: ctrl.tile.preview}"
   ng-click="ctrl.place_tile()"
   ng-mouseenter="ctrl.preview_tile()"
   ng-mouseleave="ctrl.remove_preview()"
 )
   .name {{ ctrl.tile.name }}
   .exit(ng-repeat="exit in ctrl.tile.exits" class="exit-{{ exit }}")
-  dev(ng-show="ctrl.tile.placeable")
+  div(ng-show="ctrl.tile.placeable || ctrl.tile.preview")
     .hover-target(
       ng-repeat="exit in [0, 1, 2, 3]"
       class="hover-target-{{ exit }}"

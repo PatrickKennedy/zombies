@@ -111,10 +111,23 @@
     ctrl.preview_tile = function() {
       var preview = angular.copy(game.state.hand)
           , board_coord = game.board.coord(ctrl.view.state.point_map[ctrl.coord])
+          , board_tile = game.board.tiles[board_coord]
           ;
 
-      if (!preview)
+      if (!preview || !board_tile || !board_tile.placeable)
         return;
+
+      // XXX: Traditional copy methods (angular/sugar) only copy the
+      // property's value and not the descriptor, meaning it misses get/setters
+      // HACK:FIXME: An unintented, albeit helpful, side effect of the follow is
+      // properies on the previews reference the storage values on the original
+      // object in the hand. This means we don't have to update that value
+      // but may cause problems down the line.
+      Object.defineProperty(preview, 'rotation',
+        Object.getOwnPropertyDescriptor(game.state.hand, 'rotation'));
+
+      Object.defineProperty(preview, 'exits',
+        Object.getOwnPropertyDescriptor(game.state.hand, 'exits'));
 
       console.log("placing preview");
       preview.preview = true;
@@ -130,21 +143,21 @@
       if (!preview)
         return;
 
-      console.log("removing preview");
+      console.log("removing preview | rotation ["+ ctrl.view.state.preview_tiles[board_coord].rotation +"]");
       ctrl.view.state.preview_tiles[board_coord] = undefined;
       ctrl.view.update_view();
     };
 
     ctrl.rotate_preview = function(rotation) {
       var board_coord = game.board.coord(ctrl.view.state.point_map[ctrl.coord])
-          , tile = ctrl.view.state.preview_tiles[board_coord]
+          , preview = ctrl.view.state.preview_tiles[board_coord]
           ;
 
-      if (!tile)
+      if (!preview)
         return;
 
-      console.log("updating rotation");
-      tile.rotation = rotation;
+      console.log("updating rotation ["+ rotation +"]");
+      preview.rotation = rotation;
       ctrl.view.update_view();
     };
   }
