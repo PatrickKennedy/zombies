@@ -97,8 +97,15 @@
     ctrl.place_tile = function() {
       if (!game.state.hand)
         return;
+
       console.log("attempting to place tile at ", ctrl.coord, ctrl.view.state.point_map[ctrl.coord]);
-      game.board.place_tile(ctrl.view.state.point_map[ctrl.coord], game.state.hand);
+      try {
+        game.board.place_tile(ctrl.view.state.point_map[ctrl.coord], game.state.hand);
+        game.state.hand = null;
+        ctrl.remove_preview();
+      } catch(e) {
+        console.log(e);
+      }
     };
 
     ctrl.preview_tile = function() {
