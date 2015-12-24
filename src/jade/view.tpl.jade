@@ -1,4 +1,8 @@
-#playingfield(ng-controller="ZombiesViewCtrl as ctrl")
+.control.horz-control(ng-click="ctrl.shift_view([0, -1])")
+  span Up
+.control.vert-control(ng-click="ctrl.shift_view([-1, 0])")
+  span.rotate-3 Left
+#playingfield
   .playingfield-row(ng-repeat="row in ctrl.state.view_tiles")
     zombie-tile(
       ng-repeat="view_tile in row track by $index"
@@ -6,3 +10,7 @@
       view="ctrl"
       coord="{{$index}}:{{$parent.$index}}"
     )
+.control.vert-control(ng-click="ctrl.shift_view([1, 0])" style="")
+  span.rotate-1 Right
+.control.horz-control(ng-click="ctrl.shift_view([0, 1])")
+  span Down

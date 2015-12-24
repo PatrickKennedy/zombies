@@ -1,19 +1,41 @@
 #container {
   display: flex;
   flex-wrap: wrap;
-  width: 1000px;
+  width: 1070px;
   margin: auto;
   background: rgba(0,0,0,.5);
 }
 
 zombies-view {
-  width: 750px;
+  display: flex;
+  flex-wrap: wrap;
+  width: 820px;
   background: rgba(0,0,0,.5);
+}
+
+.control {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background: rgba(33, 128, 33, 1);
+  font-size: 16px;
+  text-transform: uppercase;
+}
+
+.horz-control {
+  height: 35px;
+  flex: 1 100%;
+}
+
+.vert-control {
+  width: 35px;
 }
 
 #playingfield {
   display: flex;
   flex-wrap: wrap;
+  flex: 1 0;
 }
 
 .playingfield-row {

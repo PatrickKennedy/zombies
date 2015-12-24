@@ -65,6 +65,12 @@
       }
     };
 
+    ctrl.shift_view = function (vector) {
+      ctrl.state.viewport[0] += vector[0];
+      ctrl.state.viewport[1] += vector[1];
+      ctrl.update_view();
+    };
+
     $scope.$watch(
       // tiles can't be removed in Zombies
       function () { return game.board.events; },
@@ -123,6 +129,8 @@
       // properies on the previews reference the storage values on the original
       // object in the hand. This means we don't have to update that value
       // but may cause problems down the line.
+      // The solution to this is make another tile object that copies the tile's
+      // values and maintains it's own properties. bleh.
       Object.defineProperty(preview, 'rotation',
         Object.getOwnPropertyDescriptor(game.state.hand, 'rotation'));
 
