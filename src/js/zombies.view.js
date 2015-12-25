@@ -42,10 +42,11 @@
     ctrl.state = angular.copy(ctrl.defaults);
 
     ctrl.initialize = function (){
+      console.log('initialize zombies.view');
       ctrl.state = angular.copy(ctrl.defaults);
     };
 
-    $scope.$on('initalize_game', ctrl.initalize);
+    $scope.$on('initialize_game', ctrl.initialize);
 
     ctrl.update_view = function (){
       console.log("updating view");

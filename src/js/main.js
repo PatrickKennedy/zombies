@@ -43,7 +43,7 @@
     app.config = config;
     app.game_config = game_config;
     app.initalize_game = function(){
-      console.log('initalizing game');
+      console.log('initializing game');
       app.initalize_decks();
       $scope.$broadcast('initialize_game');
       game.initalize();
