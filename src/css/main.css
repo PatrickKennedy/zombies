@@ -78,6 +78,17 @@ zombies-view {
   font-size: 18pt;
 }
 
+/* You Are Here Burst */
+.actor {
+  background: yellow;
+  width: 25px;
+  height: 25px;
+  position: relative;
+  text-align: center;
+  border-radius: 25px;
+}
+
+/* Doorway Border Holes */
 .exit {
   background-color: rgba(97, 65, 33, 1);
   position: absolute;
@@ -103,8 +114,9 @@ zombies-view {
   left: -10px;  top: 33%;
 }
 
+/* Mouse-over elements */
 .hover-target {
-  background-color: rgba(0,0,0,.75);
+  background-color: transparent;
   position: absolute;
 }
 
@@ -132,6 +144,8 @@ zombies-view {
   left: 0;  top: 50px; bottom: 50px;
 }
 
+
+/* Draw Pile Styling */
 zombies-dev-draw {
   width: 750px;
   background: rgba(0,0,0,.5);

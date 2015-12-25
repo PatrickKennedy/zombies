@@ -22,12 +22,10 @@
 
     ctrl.defaults = {
       tiles: {},
-      actor: '0:0',
       events: 0,
     };
 
     ctrl.tiles = {};
-    ctrl.actor = '0:0';
 
     ctrl.initalize = function () {
       // ugly ugly ugly horrible initalization but everything assumes
@@ -36,7 +34,6 @@
       // todo: build proper initalization or actually use a state object. fml.
       var defaults = angular.copy(ctrl.defaults);
       ctrl.tiles = defaults.tiles;
-      ctrl.actor = defaults.actor;
       ctrl.events = defaults.events;
     };
 

@@ -101,6 +101,21 @@
   ZombiesTileCtrl.$inject = ['GameManager'];
   function ZombiesTileCtrl(game) {
     var ctrl = this;
+    Object.defineProperty(ctrl, "board_coord", {
+      get: function () {
+        return game.board.coord(ctrl.view.state.point_map[ctrl.coord]);
+      },
+      enumerable: true,
+    });
+
+    Object.defineProperty(ctrl, "actor_here", {
+      get: function () {
+        if (!game.state || !game.state.player)
+          return false;
+        return game.state.player.position == game.board.coord(ctrl.view.state.point_map[ctrl.coord]);
+      },
+      enumerable: true,
+    });
     ctrl.place_tile = function() {
       if (!game.state.hand)
         return;

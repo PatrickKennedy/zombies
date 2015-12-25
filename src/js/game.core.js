@@ -44,6 +44,7 @@
         time: 9,
       },
       player: {
+        position: "0:0",
         health: 6,
         attack: 1,
         items: [],
