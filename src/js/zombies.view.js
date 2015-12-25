@@ -72,6 +72,11 @@
       ctrl.update_view();
     };
 
+    ctrl.center_on = function (point) {
+      ctrl.state.viewport[0] = point[0];
+      ctrl.state.viewport[1] = point[1];
+    };
+
     $scope.$watch(
       // tiles can't be removed in Zombies
       function () { return game.board.events; },
@@ -116,6 +121,36 @@
       },
       enumerable: true,
     });
+
+    ctrl.do_stuff = function() {
+      console.log("do something with the tile at ", ctrl.coord);
+      if (game.state.hand)
+        return ctrl.place_tile();
+
+      return ctrl.move_player();
+    };
+
+    // HACK:FIXME: I AM GAME LOGIC. MOVE ME.
+    // TODO: Add verbose error throwing. See: game.board.placeable
+    // This will be done when configurable game logic is implemented. dw, guys.
+    ctrl.move_player = function() {
+      var board_coord = ctrl.board_coord
+          , tile = game.board.tiles[board_coord]
+          , board_point = ctrl.view.state.point_map[ctrl.coord]
+          , player_point = game.board.point(game.state.player.position)
+          ;
+
+      console.log("attempting to move player to ", board_point, " from ", player_point);
+      console.log("can move?", game.board.walkable(player_point, board_point));
+      if (!game.board.walkable(player_point, board_point))
+        return false;
+
+      game.state.player.position = board_coord;
+      ctrl.view.center_on(board_point);
+      ctrl.view.update_view();
+      return true;
+    };
+
     ctrl.place_tile = function() {
       if (!game.state.hand)
         return;
@@ -132,7 +167,7 @@
 
     ctrl.preview_tile = function() {
       var preview = angular.copy(game.state.hand)
-          , board_coord = game.board.coord(ctrl.view.state.point_map[ctrl.coord])
+          , board_coord = ctrl.board_coord
           , board_tile = game.board.tiles[board_coord]
           ;
 
@@ -160,7 +195,7 @@
     };
 
     ctrl.remove_preview = function() {
-      var board_coord = game.board.coord(ctrl.view.state.point_map[ctrl.coord])
+      var board_coord = ctrl.board_coord
           , preview = ctrl.view.state.preview_tiles[board_coord]
           ;
 
@@ -173,7 +208,7 @@
     };
 
     ctrl.rotate_preview = function(rotation) {
-      var board_coord = game.board.coord(ctrl.view.state.point_map[ctrl.coord])
+      var board_coord = ctrl.board_coord
           , preview = ctrl.view.state.preview_tiles[board_coord]
           ;
 
