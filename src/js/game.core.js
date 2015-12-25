@@ -68,6 +68,10 @@
 
     };
 
+    ctrl.move_player = function () {
+
+    };
+
     ctrl.draw_tile = function (point, tile) {
 
     };
