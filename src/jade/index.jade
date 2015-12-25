@@ -1,7 +1,8 @@
 doctype html
 html(ng-app='zombies')
   head
-    | <% styles.forEach( function ( file ) { %><link rel="stylesheet" type="text/css" href="<%= file %>"><% }); %>
+    | <% if (styles) { %><% styles.forEach( function ( file ) { %><link rel="stylesheet" type="text/css" href="<%= file %>"><% }); %><% } %>
+    | <% if (style_include) { %><style><%= style_include %></style><% } %>
 
   body(ng-controller="ZombiesController as app")
     #container
@@ -12,7 +13,8 @@ html(ng-app='zombies')
       zombies-tile-draw(ng-model="app.game.decks.outdoor")
       button(ng-click="app.initalize_game()") Start Game
 
-    | <% scripts.forEach( function ( file ) { %><script type="text/javascript" src="<%= file %>"></script><% }); %>
+    | <% if (scripts) { %><% scripts.forEach( function ( file ) { %><script type="text/javascript" src="<%= file %>"></script><% }); %><% } %>
+    | <% if (script_include) { %><script type="text/javascript"><%= script_include %></script><% } %>
 
     script.
       angular.module('game.config')

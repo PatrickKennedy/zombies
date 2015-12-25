@@ -7,9 +7,12 @@
   "bugs": "https://github.com/patrickkennedy/zombies/issues",
   "repository": {
     "type": "git",
+    "url": "https://raw.github.com/patrickkennedy/zombies/master/LICENSE"
+  },
+  "license": {
+    "type": "MIT",
     "url": "git@github.com:patrickkennedy/zombies.git"
   },
-  "license": "ISC",
   "dependencies": {},
   "devDependencies": {
     "grunt": "^0.4.5",

@@ -17,7 +17,7 @@ module.exports = function(grunt) {
         ' * <%= pkg.homepage %>\n' +
         ' *\n' +
         ' * Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author %>\n' +
-        ' * Licensed <%= pkg.licenses.type %> <<%= pkg.licenses.url %>>\n' +
+        ' * Licensed <%= pkg.license.type %> <<%= pkg.license.url %>>\n' +
         ' */\n'
     },
 
@@ -48,11 +48,8 @@ module.exports = function(grunt) {
         },
         src: [
           '<%= vendor_files.js %>',
-          'module.prefix',
           '<%= build_dir %>/src/**/*.js',
-          '<%= html2js.app.dest %>',
-          '<%= html2js.common.dest %>',
-          'module.suffix'
+          '<%= html2js.templates.dest %>',
        ],
         dest: '<%= compile_dir %>/assets/<%= pkg.name %>-<%= pkg.version %>.js'
       }
@@ -265,7 +262,6 @@ module.exports = function(grunt) {
         dir: '<%= compile_dir %>',
         src: [
           '<%= concat.compile_js.dest %>',
-          '<%= vendor_files.css %>',
           '<%= build_dir %>/assets/<%= pkg.name %>-<%= pkg.version %>.css'
        ]
       }
@@ -290,7 +286,7 @@ module.exports = function(grunt) {
           }
         },
         files: {
-          "<%= build_dir %>/index.html": ["<%= app_files.index %>"]
+          "<%= build_dir %>/index.tpl.html": ["<%= app_files.index %>"]
         }
       }
     },
@@ -410,10 +406,9 @@ module.exports = function(grunt) {
    * minifying your code.
    */
   grunt.registerTask('compile', [
-    'less:compile',
     'copy:compile_assets',
     'concat:compile_js',
-    'uglify',
+    //'uglify',
     'index:compile'
  ]);
 
@@ -444,22 +439,28 @@ module.exports = function(grunt) {
    */
   grunt.registerMultiTask('index', 'Process index.html template', function () {
     var dirRE = new RegExp('^('+grunt.config('build_dir')+'|'+grunt.config('compile_dir')+')\/', 'g');
-    var jsFiles = filterForJS(this.filesSrc).map(function (file) {
-      return file.replace(dirRE, '');
-    });
-    var cssFiles = filterForCSS(this.filesSrc).map(function (file) {
-      return file.replace(dirRE, '');
-    });
+    var data = {
+      version: grunt.config('pkg.version'),
+      scripts: filterForJS(this.filesSrc).map(function (file) {
+        return file.replace(dirRE, '');
+      }),
+      styles: filterForCSS(this.filesSrc).map(function (file) {
+        return file.replace(dirRE, '');
+      }),
+      script_include: null,
+      style_include: null,
+    };
 
-    grunt.file.copy(grunt.config('build_dir')+'/index.html', this.data.dir + '/index.html', {
+    if (this.target == "compile") {
+      data.script_include = grunt.file.read(grunt.config('compile_dir')+"/"+data.scripts[0]);
+      data.style_include = grunt.file.read(grunt.config('build_dir')+"/"+data.styles[0]);
+      data.scripts = null;
+      data.styles = null;
+    }
+
+    grunt.file.copy(grunt.config('build_dir')+'/index.tpl.html', this.data.dir + '/index.html', {
       process: function (contents, path) {
-        return grunt.template.process(contents, {
-          data: {
-            scripts: jsFiles,
-            styles: cssFiles,
-            version: grunt.config('pkg.version')
-          }
-        });
+        return grunt.template.process(contents, { data: data });
       }
     });
   });
@@ -470,13 +471,13 @@ module.exports = function(grunt) {
    * compiled as grunt templates for use by Karma. Yay!
    */
   grunt.registerMultiTask( 'karmaconfig', 'Process karma config templates', function () {
-    var jsFiles = filterForJS( this.filesSrc );
+    var jsFiles = filterForJS(this.filesSrc);
 
     grunt.file.copy( 'karma/karma-unit.tpl.js', grunt.config( 'build_dir' ) + '/karma-unit.js', {
       process: function ( contents, path ) {
         return grunt.template.process( contents, {
           data: {
-            scripts: jsFiles
+            scripts: jsFiles,
           }
         });
       }
