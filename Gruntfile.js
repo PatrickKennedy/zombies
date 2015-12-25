@@ -23,7 +23,6 @@ module.exports = function(grunt) {
 
     clean: [
       '<%= build_dir %>',
-      '<%= compile_dir %>'
    ],
 
     concat: {
@@ -51,7 +50,7 @@ module.exports = function(grunt) {
           '<%= build_dir %>/src/**/*.js',
           '<%= html2js.templates.dest %>',
        ],
-        dest: '<%= compile_dir %>/assets/<%= pkg.name %>-<%= pkg.version %>.js'
+        dest: '<%= build_dir %>/assets/<%= pkg.name %>-<%= pkg.version %>.js'
       }
     },
 
@@ -439,6 +438,7 @@ module.exports = function(grunt) {
    */
   grunt.registerMultiTask('index', 'Process index.html template', function () {
     var dirRE = new RegExp('^('+grunt.config('build_dir')+'|'+grunt.config('compile_dir')+')\/', 'g');
+    var dest = this.data.dir + '/index.html';
     var data = {
       version: grunt.config('pkg.version'),
       scripts: filterForJS(this.filesSrc).map(function (file) {
@@ -456,9 +456,10 @@ module.exports = function(grunt) {
       data.style_include = grunt.file.read(grunt.config('build_dir')+"/"+data.styles[0]);
       data.scripts = null;
       data.styles = null;
+      dest = grunt.config('compiled_name');
     }
 
-    grunt.file.copy(grunt.config('build_dir')+'/index.tpl.html', this.data.dir + '/index.html', {
+    grunt.file.copy(grunt.config('build_dir')+'/index.tpl.html', dest, {
       process: function (contents, path) {
         return grunt.template.process(contents, { data: data });
       }
