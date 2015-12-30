@@ -137,11 +137,14 @@
       return [+matches[1], +matches[2]];
     };
 
-    ctrl.near = function(p1, p2) {
-      // Calculate the distance long a and b in c2 = a2 + b2
+    ctrl.near = function(p1, p2, nearness) {
+      nearness = (typeof nearness === 'undefined') ? 1 : nearness;
+
+      // Calculate the distance along a and b in c2 = a2 + b2
       var dist = Math.abs(p1[0] - p2[0]) + Math.abs(p1[1] - p2[1]);
 
-      return (dist >= 0) && (dist <= 1);
+      // position is the same, position is within nearness, position > nearness
+      return dist === 0 ? -1 : dist <= nearness ? 1 : 0;
     };
 
     ctrl.walkable = function(p1, p2) {
@@ -151,8 +154,9 @@
           , dir_coord = ctrl.coord(vec)
           ;
       // todo: add error throwing for better UI feedback
-      if (!t1 || !t2 || !ctrl.near(p1, p2))
+      if (!t1 || !t2 || ctrl.near(p1, p2) !== 1)
         return false;
+
       exit = t1.vector_map[dir_coord];
       return t1.has_exit(exit) && t2.has_exit((exit + 2) % 4);
     };
