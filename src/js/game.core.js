@@ -52,6 +52,8 @@
         totem: false,
       },
       hand: null,
+      initalized: true,
+      running: true,
     };
 
     ctrl.state = {};
