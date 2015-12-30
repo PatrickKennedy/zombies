@@ -122,6 +122,42 @@
       enumerable: true,
     });
 
+    Object.defineProperty(ctrl, "interactable", {
+      get: function () {
+        if (!game.state.running || !ctrl.tile)
+          return false;
+
+        if (game.state.hand) {
+          return ctrl.tile.preview;
+        } else {
+          return !ctrl.tile.placeable &&
+                  game.board.walkable(
+                    game.board.point(game.state.player.position),
+                    game.board.point(ctrl.board_coord)
+                  )
+                  ;
+        }
+      },
+      enumerable: true,
+    });
+
+    Object.defineProperty(ctrl, "ng_classes", {
+      get: function () {
+        var class_tests = {
+          present: ctrl.tile,
+          placeable: ctrl.tile && ctrl.tile.placeable,
+          preview: ctrl.tile && ctrl.tile.preview,
+          interactable: ctrl.interactable,
+        };
+
+        return Object.keys(class_tests)
+                .map(function(cls) { return class_tests[cls] ? cls : ""; })
+                .join(' ');
+      },
+      enumerable: true,
+    });
+
+
     ctrl.do_stuff = function() {
       console.log("do something with the tile at ", ctrl.coord);
       if (game.state.hand)

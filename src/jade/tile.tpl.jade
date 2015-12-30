@@ -1,5 +1,5 @@
 .view-tile(
-  ng-class="{placeable: ctrl.tile.placeable, present: ctrl.tile, preview: ctrl.tile.preview}"
+  ng-class="ctrl.ng_classes"
   ng-click="ctrl.do_stuff()"
   ng-mouseenter="ctrl.preview_tile()"
   ng-mouseleave="ctrl.remove_preview()"

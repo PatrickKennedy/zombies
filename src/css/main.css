@@ -67,6 +67,10 @@ zombies-view {
 }
 
 .view-tile.preview {
+
+}
+
+.view-tile.interactable {
   cursor: pointer;
 }
 
@@ -191,4 +195,3 @@ zombies-tile-draw .tile-card.top-card .deck-name {
 .rotate-1 { transform: rotate(90deg); }
 .rotate-2 { transform: rotate(180deg); }
 .rotate-3 { transform: rotate(270deg); }
-
