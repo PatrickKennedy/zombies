@@ -29,6 +29,7 @@
     .module('zombies', [
       'zombies.templates', 'zombies.config', 'game.core',
       'zombies.cribsheet', 'zombies.decks', 'zombies.view',
+      'plugin.zombies',
     ])
     .controller('ZombiesController', ZombiesController)
   ;
@@ -37,6 +38,7 @@
     '$scope', 'ZombiesConfig',
     'GameConfig', 'GameManager',
     'DeckManager', 'BoardTile',
+    'PluginZombies',
   ];
   function ZombiesController($scope, config, game_config, game, Deck, Tile) {
     var app = this;

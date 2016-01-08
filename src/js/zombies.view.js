@@ -166,25 +166,15 @@
       return ctrl.move_player();
     };
 
-    // HACK:FIXME: I AM GAME LOGIC. MOVE ME.
     // TODO: Add verbose error throwing. See: game.board.placeable
-    // This will be done when configurable game logic is implemented. dw, guys.
     ctrl.move_player = function() {
-      var board_coord = ctrl.board_coord
-          , tile = game.board.tiles[board_coord]
-          , board_point = ctrl.view.state.point_map[ctrl.coord]
-          , player_point = game.board.point(game.state.player.position)
-          ;
+      if (game.move_player(ctrl.board_coord)) {
+        ctrl.view.center_on(game.board.point(ctrl.board_coord));
+        ctrl.view.update_view();
+        return true;
+      }
 
-      console.log("attempting to move player to ", board_point, " from ", player_point);
-      console.log("can move?", game.board.walkable(player_point, board_point));
-      if (!game.board.walkable(player_point, board_point))
-        return false;
-
-      game.state.player.position = board_coord;
-      ctrl.view.center_on(board_point);
-      ctrl.view.update_view();
-      return true;
+      return false;
     };
 
     ctrl.place_tile = function() {

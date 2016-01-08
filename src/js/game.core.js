@@ -31,12 +31,14 @@
    * Contains core website logic
    */
   angular
-    .module('game.core', ['game.config', 'game.board', 'game.deck'])
+    .module('game.core', [
+      'game.config', 'game.board', 'game.deck', 'game.plugins'
+    ])
     .service('GameManager', GameManager)
   ;
 
-  GameManager.$inject = ['GameConfig', 'BoardManager', ];
-  function GameManager(config, board) {
+  GameManager.$inject = ['GameConfig', 'BoardManager', 'PluginMount'];
+  function GameManager(config, board, Mount) {
     var ctrl = this;
 
     ctrl.defaults = {
@@ -66,28 +68,24 @@
       ctrl.board.initalize();
     };
 
-    ctrl.move = function () {
-
-    };
-
-    ctrl.move_player = function () {
-
+    ctrl.move_player = function (to_coord) {
+      return Mount.get('game.core.move_player').run(ctrl, to_coord);
     };
 
     ctrl.draw_tile = function (point, tile) {
-
+      Mount.get('game.core.draw_tile').run();
     };
 
     ctrl.place_tile = function (point, tile) {
-
+      Mount.get('game.core.place_tile').run();
     };
 
     ctrl.draw_card = function() {
-
+      Mount.get('game.core.draw_card').run();
     };
 
     ctrl.resolve_card = function() {
-
+      Mount.get('game.core.resolve_card').run();
     };
   }
 

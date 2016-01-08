@@ -7,8 +7,9 @@ describe('Game', function() {
         ;
 
     beforeEach(module('game.board'));
+    beforeEach(module('plugin.zombies'));
 
-    beforeEach(inject(function(BoardManager, BoardTile) {
+    beforeEach(inject(function(BoardManager, BoardTile, PluginZombies) {
       board = BoardManager;
       Tile = BoardTile;
       example_tiles = {

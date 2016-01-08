@@ -4,15 +4,15 @@
    * Contains playing field state and logic
    */
   angular
-    .module('game.board', ['game.config'])
+    .module('game.board', ['game.config', 'game.plugins'])
     .service('BoardManager', BoardManager)
     .factory('BoardNullTile', BoardNullTile)
     .factory('BoardTile', BoardTile)
   ;
 
 
-  BoardManager.$inject = ['GameConfig', 'BoardNullTile',];
-  function BoardManager(config, NullTile) {
+  BoardManager.$inject = ['GameConfig', 'BoardNullTile', 'PluginMount'];
+  function BoardManager(config, NullTile, Mount) {
     var ctrl = this;
 
     ctrl.placeholders = {
@@ -70,20 +70,7 @@
 
       // check to make sure the tile is reachable from the other tiles
       // TODO: replace with a configurable handler
-      connects = tile.exits.some(function(exit) {
-        var vector = tile.vectors[exit]
-            , exit_point = [
-              point[0] + vector[0],
-              point[1] + vector[1],
-            ]
-            ;
-        exit_coord = ctrl.coord(exit_point);
-        exit_tile = ctrl.tiles[exit_coord];
-        if (exit_tile && exit_tile.has_exit)
-          return exit_tile.has_exit((exit + 2) % 4);
-
-        return false;
-      }, this);
+      connects = Mount.get('game.board.placable.connects').run(ctrl, point, tile);
 
       if (!connects)
         throw new Error('tile does not connect to another tile');
