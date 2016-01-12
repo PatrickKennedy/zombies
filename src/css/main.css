@@ -70,10 +70,6 @@ zombies-view {
 
 }
 
-.view-tile.interactable {
-  cursor: pointer;
-}
-
 .view-tile:hover {
   border-color: black;
 }
@@ -150,18 +146,46 @@ zombies-view {
 
 
 /* Draw Pile Styling */
-zombies-dev-draw {
-  width: 750px;
-  background: rgba(0,0,0,.5);
-}
-
 zombies-crib-sheet {
   width: 500px;
   background: rgba(0,0,0,.5);
 }
 
-zombies-tile-draw {
+zombies-dev-draw {
   width: 250px;
+  background: rgba(0,0,0,.5);
+}
+
+zombies-dev-draw .dev-card {
+  width: 200px;
+  height: 5px;
+  background: rgba(128, 0, 64, 0.5);
+  border: 1px solid gold;
+  border-top: none;
+}
+
+zombies-dev-draw .dev-card.top-card {
+  width: 200px;
+  height: 300px;
+  background: rgba(128, 0, 64, 0.5);
+  border: 1px solid gold;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+zombies-dev-draw .dev-card.top-card .deck-name {
+  font-size: 18pt;
+}
+
+zombies-tile-draw {
+  display: flex;
+  width: 250px;
+  flex-grow: 1;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   position: relative;
   background: rgba(0,0,0,.5);
 }
@@ -183,7 +207,6 @@ zombies-tile-draw .tile-card.top-card {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  cursor: pointer;
 }
 
 zombies-tile-draw .tile-card.top-card .deck-name {
@@ -191,6 +214,8 @@ zombies-tile-draw .tile-card.top-card .deck-name {
 }
 
 /* Utility Functions */
+.interactable { cursor: pointer; }
+
 .rotate-0 { transform: rotate(0deg); }
 .rotate-1 { transform: rotate(90deg); }
 .rotate-2 { transform: rotate(180deg); }

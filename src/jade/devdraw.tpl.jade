@@ -1,2 +1,7 @@
-#devdraw
-
+.dev-card(
+  ng-repeat="card in ctrl.deck.stock"
+  ng-class="{ 'top-card': $first, interactable: ctrl.interactable }"
+  ng-click="ctrl.draw()"
+)
+  .deck-name(ng-if="$first")
+    | {{ ctrl.deck.name }}

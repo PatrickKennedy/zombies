@@ -107,9 +107,12 @@
   function ZombiesTileCtrl(game) {
     var ctrl = this;
     Object.defineProperty(ctrl, "board_coord", {
-      get: function () {
-        return game.board.coord(ctrl.view.state.point_map[ctrl.coord]);
-      },
+      get: function () { return game.board.coord(ctrl.board_point); },
+      enumerable: true,
+    });
+
+    Object.defineProperty(ctrl, "board_point", {
+      get: function () { return ctrl.view.state.point_map[ctrl.coord]; },
       enumerable: true,
     });
 
@@ -124,7 +127,7 @@
 
     Object.defineProperty(ctrl, "interactable", {
       get: function () {
-        if (!game.state.running || !ctrl.tile)
+        if (!game.state.running || !ctrl.tile || !game.state.player.can_move)
           return false;
 
         if (game.state.hand) {
@@ -169,7 +172,7 @@
     // TODO: Add verbose error throwing. See: game.board.placeable
     ctrl.move_player = function() {
       if (game.move_player(ctrl.board_coord)) {
-        ctrl.view.center_on(game.board.point(ctrl.board_coord));
+        ctrl.view.center_on(ctrl.board_point);
         ctrl.view.update_view();
         return true;
       }
@@ -181,14 +184,10 @@
       if (!game.state.hand)
         return;
 
-      console.log("attempting to place tile at ", ctrl.coord, ctrl.view.state.point_map[ctrl.coord]);
-      try {
-        game.board.place_tile(ctrl.view.state.point_map[ctrl.coord], game.state.hand);
-        game.state.hand = null;
+      if (game.place_tile(ctrl.board_point, game.state.hand)) {
         ctrl.remove_preview();
-      } catch(e) {
-        console.log(e);
       }
+
     };
 
     ctrl.preview_tile = function() {

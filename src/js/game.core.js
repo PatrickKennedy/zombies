@@ -44,6 +44,8 @@
     ctrl.defaults = {
       env: {
         time: 9,
+        zombies: 0,
+        resolve_for_item: false,
       },
       player: {
         position: "0:0",
@@ -52,6 +54,7 @@
         items: [],
         weapons: [],
         totem: false,
+        can_move: true,
       },
       hand: null,
       initalized: true,
@@ -72,20 +75,20 @@
       return Mount.get('game.core.move_player').run(ctrl, to_coord);
     };
 
-    ctrl.draw_tile = function (point, tile) {
-      Mount.get('game.core.draw_tile').run();
+    ctrl.draw_tile = function (deck) {
+      Mount.get('game.core.draw_tile').run(ctrl, deck);
     };
 
     ctrl.place_tile = function (point, tile) {
-      Mount.get('game.core.place_tile').run();
+      Mount.get('game.core.place_tile').run(ctrl, point, tile);
     };
 
-    ctrl.draw_card = function() {
-      Mount.get('game.core.draw_card').run();
+    ctrl.draw_card = function(deck) {
+      Mount.get('game.core.draw_card').run(ctrl, deck);
     };
 
-    ctrl.resolve_card = function() {
-      Mount.get('game.core.resolve_card').run();
+    ctrl.resolve_card = function(card, deck) {
+      Mount.get('game.core.resolve_card').run(ctrl, card, deck);
     };
   }
 
