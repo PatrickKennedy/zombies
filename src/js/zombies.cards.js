@@ -97,7 +97,171 @@
               on_resolve: function(){ }
             },
           ],
-          dev: [],
+
+          dev: [
+          {
+            item: {
+              desc: 'Grisly Femur',
+              result: function(game) { game.state.player.weapon = 'femur'; },
+            },
+            9: {
+              desc: 'ITEM',
+              result: function(game) { game.state.env.resolve_for_item = true; },
+            },
+            10: {
+              desc: '5 Zombies',
+              result: function(game) { game.state.env.zombies = 5; },
+            },
+            11: {
+              desc: "Your soul isn't wanted here. -1 HEALTH",
+              result: function(game) { game.state.player.health -= 1; },
+            },
+          },
+          {
+            item: {
+              desc: 'Gasoline',
+              result: function(game) { game.state.player.item = 'gas'; },
+            },
+            9: {
+              desc: '4 Zombies',
+              result: function(game) { game.state.env.zombies = 4; },
+            },
+            10: {
+              desc: 'You sense your impending doom. -1 HEALTH',
+              result: function(game) { game.state.player.health -= 1; },
+            },
+            11: {
+              desc: "ITEM",
+              result: function(game) { game.state.env.resolve_for_item = true; },
+            },
+          },
+          {
+            item: {
+              desc: 'Chainsaw',
+              result: function(game) { game.state.player.item = 'saw'; },
+            },
+            9: {
+                desc: '3 Zombies',
+                result: function(game) { game.state.env.zombies = 3; },
+            },
+            10: {
+                desc: 'You hear terrible screams',
+                result: function(game) { },
+            },
+            11: {
+                desc: '5 Zombies',
+                result: function(game) { game.state.env.zombies = 5; },
+            },
+          },
+          {
+            item: {
+              desc: 'Board with Nails',
+              result: function(game) { game.state.player.item = 'board'; },
+            },
+            9: {
+              desc: "ITEM",
+              result: function(game) { game.state.env.resolve_for_item = true; },
+            },
+            10: {
+              desc: '4 Zombies',
+              result: function(game) { game.state.env.zombies = 4; },
+            },
+            11: {
+              desc: 'Something icky in your mouth. -1 HEALTH',
+              result: function(game) { game.state.player.health -= 1; },
+            },
+          },
+          {
+            item: {
+              desc: 'Board with Nails',
+              result: function(game) { game.state.player.item = 'board'; },
+            },
+            9: {
+              desc: 'Slip on nasty goo. -1 HEALTH',
+              result: function(game) { game.state.player.health -= 1; },
+            },
+            10: {
+              desc: '4 Zombies',
+              result: function(game) { game.state.env.zombies = 4; },
+            },
+            11: {
+              desc: 'The smell of blood is in the air.',
+              result: function(game) { },
+            },
+          },
+          {
+            item: {
+              desc: 'Machete',
+              result: function(game) { game.state.player.item = 'machete'; },
+            },
+            9: {
+              desc: '4 Zombies',
+              result: function(game) { game.state.env.zombies = 4; },
+            },
+            10: {
+              desc: 'The smell of blood is in the air.',
+              result: function(game) { },
+            },
+            11: {
+              desc: '6 Zombies',
+              result: function(game) { game.state.env.zombies = 6; },
+            },
+          },
+          {
+            item: {
+              desc: 'Can of Soda',
+              result: function(game) { game.state.player.item = 'soda'; },
+            },
+            9: {
+              desc: 'Candybar in your pocket. +1 HEALTH',
+              result: function(game) { game.state.player.health += 1; },
+            },
+            10: {
+              desc: "ITEM",
+              result: function(game) { game.state.env.resolve_for_item = true; },
+            },
+            11: {
+              desc: '4 Zombies',
+              result: function(game) { game.state.env.zombies = 4; },
+            },
+          },
+          {
+            item: {
+              desc: 'Candle',
+              result: function(game) { game.state.player.item = 'candle'; },
+            },
+            9: {
+              desc: 'Candybar in your pocket. +1 HEALTH',
+              result: function(game) { game.state.player.health += 1; },
+            },
+            10: {
+              desc: "ITEM",
+              result: function(game) { game.state.env.resolve_for_item = true; },
+            },
+            11: {
+              desc: '4 Zombies',
+              result: function(game) { game.state.env.zombies = 4; },
+            },
+          },
+          {
+            item: {
+              desc: 'Oil',
+              result: function(game) { game.state.player.item = 'oil'; },
+            },
+            9: {
+              desc: 'You try hard not to wet yourself.',
+              result: function(game) { },
+            },
+            10: {
+              desc: "ITEM",
+              result: function(game) { game.state.env.resolve_for_item = true; },
+            },
+            11: {
+              desc: '6 Zombies',
+              result: function(game) { game.state.env.zombies = 6; },
+            },
+          },
+          ],
         },
       });
     });
