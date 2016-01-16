@@ -9,6 +9,8 @@
     .controller('ZombiesDevDrawCtrl', ZombiesDevDrawCtrl)
     .directive('zombiesTileDraw', zombiesTileDraw)
     .controller('ZombiesTileDrawCtrl', ZombiesTileDrawCtrl)
+    .directive('zombiesCardPreview', zombiesCardPreview)
+    .controller('ZombiesCardPreviewCtrl', ZombiesCardPreviewCtrl)
   ;
 
   function zombiesTileDraw() {
@@ -62,9 +64,39 @@
         return;
       console.log('drawing card');
       game.draw_card(ctrl.deck);
+    };
+
+    Object.defineProperty(ctrl, "interactable", {
+      get: function () { return !game.state.player.can_move; },
+      enumerable: true,
+    });
+  }
+
+  function zombiesCardPreview() {
+    return {
+      scope: {},
+      bindToController: {
+        card: '=ngModel',
+      },
+      templateUrl: 'cardpreview.jade',
+      controller: 'ZombiesCardPreviewCtrl',
+      controllerAs: 'ctrl',
+    };
+  }
+
+  ZombiesCardPreviewCtrl.$inject = ['GameManager'];
+  function ZombiesCardPreviewCtrl(game) {
+    var ctrl = this;
+    ctrl.resolve = function (){
+      // TODO: Implement player feedback
+      if (!ctrl.interactable)
+        return;
+      console.log('resolving card');
       game.resolve_card(game.state.hand, ctrl.deck);
       game.state.player.can_move = true;
     };
+
+    ctrl.update_action_preview = function (){};
 
     Object.defineProperty(ctrl, "interactable", {
       get: function () { return !game.state.player.can_move; },

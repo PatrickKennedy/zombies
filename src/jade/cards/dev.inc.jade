@@ -1,0 +1,11 @@
+.dev-card(
+  ng-click="ctrl.resolve()"
+  ng-mouseenter="ctrl.update_move_preview()"
+  ng-mouseleave="ctrl.update_move_preview()"
+)
+
+  .item   {{ ctrl.card.item.desc }}
+  .nine {{ ctrl.card[9].desc }}
+  .ten {{ ctrl.card[10].desc }}
+  .eleven {{ ctrl.card[11].desc }}
+

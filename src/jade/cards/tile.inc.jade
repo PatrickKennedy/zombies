@@ -1,0 +1,16 @@
+.view-tile(
+  ng-class="ctrl.ng_classes"
+  ng-click="ctrl.do_stuff()"
+  ng-mouseenter="ctrl.preview_tile()"
+  ng-mouseleave="ctrl.remove_preview()"
+)
+
+  .name(class="rotate-{{ctrl.tile.rotation}}") {{ ctrl.tile.name }}
+  .actor(ng-if="ctrl.actor_here")
+  .exit(ng-repeat="exit in ctrl.tile.exits" class="exit-{{ exit }}")
+  div(ng-show="ctrl.tile.placeable || ctrl.tile.preview")
+    .hover-target(
+      ng-repeat="exit in [0, 1, 2, 3]"
+      class="hover-target-{{ exit }}"
+      ng-mouseover="ctrl.rotate_preview(exit)"
+    )
