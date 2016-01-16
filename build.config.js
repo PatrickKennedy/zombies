@@ -29,7 +29,7 @@ module.exports = {
 
     html: [ 'build/index.html' ],
     css: ['src/css/*.css'],
-    less: 'src/less/main.less'
+    sass: 'src/sass/main.sass'
   },
 
   /**
