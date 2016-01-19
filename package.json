@@ -1,7 +1,7 @@
 {
   "author": "Patrick Kennedy <p@trickkennedy.com>",
   "name": "zombies",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Zombie in my Browser",
   "main": "./bin/index.html",
   "bugs": "https://github.com/patrickkennedy/zombies/issues",
