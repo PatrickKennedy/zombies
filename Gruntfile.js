@@ -32,8 +32,8 @@ module.exports = function(grunt) {
        */
       build_css: {
         src: [
-          '<%= app_files.css %>',
           '<%= vendor_files.css %>',
+          '<%= build_dir %>/assets/<%= pkg.name %>-<%= pkg.version %>.css',
        ],
         dest: '<%= build_dir %>/assets/<%= pkg.name %>-<%= pkg.version %>.css'
       },
@@ -195,8 +195,13 @@ module.exports = function(grunt) {
         tasks: ['index:build']
       },
 
+      sass: {
+        files: ['<%= app_files.sass %>'],
+        tasks: ['sass:build']
+      },
+
       templates: {
-        files: ['<%= app_files.templates %>'],
+        files: ['<%= app_files.templates %>', '<%= app_files.includes %>'],
         tasks: ['html2js'],
         options: {
           spawn: false,
@@ -352,6 +357,25 @@ module.exports = function(grunt) {
       }
     },
 
+    sass: {
+      build: {
+        options: {
+          style: 'expanded'
+        },
+        files: {
+          '<%= build_dir %>/assets/<%= pkg.name %>-<%= pkg.version %>.css': '<%= app_files.sass %>',
+        }
+      },
+      compile: {
+        options: {
+          style: 'compressed'
+        },
+        files: {
+          '<%= build_dir %>/assets/<%= pkg.name %>-<%= pkg.version %>.css': '<%= app_files.sass %>',
+        }
+      }
+    },
+
     uglify: {
       compile: {
         options: {
@@ -390,6 +414,7 @@ module.exports = function(grunt) {
     'html2js',
     'jade',
     'jshint',
+    'sass:build',
     'concat:build_css',
     'copy:build_app_assets',
     'copy:build_vendor_assets',
