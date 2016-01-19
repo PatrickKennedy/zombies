@@ -4,8 +4,14 @@
   ng-mouseleave="ctrl.update_move_preview()"
 )
 
-  .item   {{ ctrl.card.item.desc }}
-  .nine {{ ctrl.card[9].desc }}
-  .ten {{ ctrl.card[10].desc }}
-  .eleven {{ ctrl.card[11].desc }}
+  .card-event.nine
+    .event-time 9:00PM
+    | {{ ctrl.card[9].desc }}
+  .card-event.ten
+    .event-time 10:00PM
+    | {{ ctrl.card[10].desc }}
+  .card-event.eleven
+    .event-time 11:00PM
+    | {{ ctrl.card[11].desc }}
+  .card-event.item   {{ ctrl.card.item.desc }}
 
