@@ -477,7 +477,7 @@ module.exports = function(grunt) {
     };
 
     if (this.target == "compile") {
-      data.script_include = grunt.file.read(grunt.config('compile_dir')+"/"+data.scripts[0]);
+      data.script_include = grunt.file.read(grunt.config('build_dir')+"/"+data.scripts[0]);
       data.style_include = grunt.file.read(grunt.config('build_dir')+"/"+data.styles[0]);
       data.scripts = null;
       data.styles = null;
