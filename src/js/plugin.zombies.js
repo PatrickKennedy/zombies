@@ -88,26 +88,33 @@
 
     var resolve_card = Mount.get('game.core.resolve_card');
     var resolve_combat = Mount.get('game.core.resolve_combat');
-    resolve_card.use(plugin_name, function(history, card, deck) {
+    resolve_card.use(plugin_name, function(history, card) {
       var game = this;
       console.log("resolving dev card: ", card);
-      if (game.state.resolve_for_item) {
+      if (game.state.env.resolve_for_item) {
         card.item.result(game);
+        game.state.env.resolve_for_item = false;
       } else {
         card[game.state.env.time].result(game);
       }
 
-      resolve_combat.run(game);
+      if (game.state.env.zombies)
+        resolve_combat.run(game);
 
       game.state.player.can_move = true;
 
-      deck.discard(game.state.hand);
+      // TODO: Move to a post-mount after that system is implemented
       game.state.hand = null;
+      card.discard();
+      if (card.deck.stock.length === 0) {
+        game.state.env.time += 1;
+        card.deck.combine().shuffle().burn(2);
+      }
     });
 
     resolve_combat.use(plugin_name, function(history) {
       var game = this;
-      game.state.player.health -= game.state.env.zombies;
+      game.state.player.health -= game.state.env.zombies - game.state.player.attack;
       game.state.env.zombies = 0;
     });
   }

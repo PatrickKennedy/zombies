@@ -67,7 +67,9 @@
     };
 
     Object.defineProperty(ctrl, "interactable", {
-      get: function () { return !game.state.player.can_move; },
+      get: function () {
+        return !game.state.player.can_move || game.state.env.resolve_for_item;
+      },
       enumerable: true,
     });
   }
@@ -99,7 +101,7 @@
     ctrl.update_action_preview = function (){};
 
     Object.defineProperty(ctrl, "interactable", {
-      get: function () { return !game.state.player.can_move; },
+      get: function () { return game.state.hand.item; },
       enumerable: true,
     });
   }
