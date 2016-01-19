@@ -30,9 +30,17 @@
   DeckManager.$inject = [];
   function DeckManager() {
     var Deck = function(stock, name) {
-      this.name = name;
-      this.stock = stock;
-      this.burn_pile = [];
+      var self = this;
+      self.name = name;
+      self.stock = stock;
+      self.burn_pile = [];
+
+      // HACK: expose deck functions to each card so it can be manipulated
+      // in the absence of information about the deck.
+      self.stock.forEach(function(card) {
+        card.deck = self;
+        card.discard = function() { self.discard(card); };
+      });
     };
 
     Deck.prototype.shuffle = function (){
