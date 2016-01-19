@@ -1,0 +1,5 @@
+#cardpreview(ng-if="ctrl.card")
+  div(ng-if="ctrl.card.item")
+    include cards/dev.inc.jade
+  div(ng-if="!ctrl.card.item" ng-init="ctrl.tile = ctrl.card;")
+    include cards/tile.inc.jade

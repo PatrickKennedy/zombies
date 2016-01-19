@@ -25,11 +25,12 @@ module.exports = {
     jsunit: [ 'src/**/*.spec.js' ],
 
     templates: ['src/jade/*.tpl.jade'],
+    includes: ['src/jade/*/*.inc.jade'],
     index: ['src/jade/index.jade'],
 
     html: [ 'build/index.html' ],
     css: ['src/css/*.css'],
-    less: 'src/less/main.less'
+    sass: 'src/sass/main.sass'
   },
 
   /**

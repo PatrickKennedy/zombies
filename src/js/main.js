@@ -29,6 +29,7 @@
     .module('zombies', [
       'zombies.templates', 'zombies.config', 'game.core',
       'zombies.cribsheet', 'zombies.decks', 'zombies.view',
+      'plugin.zombies',
     ])
     .controller('ZombiesController', ZombiesController)
   ;
@@ -37,6 +38,7 @@
     '$scope', 'ZombiesConfig',
     'GameConfig', 'GameManager',
     'DeckManager', 'BoardTile',
+    'PluginZombies',
   ];
   function ZombiesController($scope, config, game_config, game, Deck, Tile) {
     var app = this;
@@ -57,7 +59,7 @@
       game.decks = {
         indoor:   new Deck(game_config.cards.indoor.slice().map(function(t){ return new Tile(t); }), "Indoor"),
         outdoor:  new Deck(game_config.cards.outdoor.slice().map(function(t){ return new Tile(t); }), "Outdoor"),
-        dev:      new Deck(game_config.cards.dev.slice().map(function(t){ return new Tile(t); }), "Dev"),
+        dev:      new Deck(game_config.cards.dev.slice().map(function(t){ return t; }), "Dev"),
       };
 
       // the top of the card definitions (foyer) is always the first card we want to draw

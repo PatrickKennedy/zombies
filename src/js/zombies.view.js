@@ -107,9 +107,12 @@
   function ZombiesTileCtrl(game) {
     var ctrl = this;
     Object.defineProperty(ctrl, "board_coord", {
-      get: function () {
-        return game.board.coord(ctrl.view.state.point_map[ctrl.coord]);
-      },
+      get: function () { return game.board.coord(ctrl.board_point); },
+      enumerable: true,
+    });
+
+    Object.defineProperty(ctrl, "board_point", {
+      get: function () { return ctrl.view.state.point_map[ctrl.coord]; },
       enumerable: true,
     });
 
@@ -122,6 +125,42 @@
       enumerable: true,
     });
 
+    Object.defineProperty(ctrl, "interactable", {
+      get: function () {
+        if (!game.state.running || !ctrl.tile || !game.state.player.can_move)
+          return false;
+
+        if (game.state.hand) {
+          return ctrl.tile.preview;
+        } else {
+          return !ctrl.tile.placeable &&
+                  game.board.walkable(
+                    game.board.point(game.state.player.position),
+                    game.board.point(ctrl.board_coord)
+                  )
+                  ;
+        }
+      },
+      enumerable: true,
+    });
+
+    Object.defineProperty(ctrl, "ng_classes", {
+      get: function () {
+        var class_tests = {
+          present: ctrl.tile,
+          placeable: ctrl.tile && ctrl.tile.placeable,
+          preview: ctrl.tile && ctrl.tile.preview,
+          interactable: ctrl.interactable,
+        };
+
+        return Object.keys(class_tests)
+                .map(function(cls) { return class_tests[cls] ? cls : ""; })
+                .join(' ');
+      },
+      enumerable: true,
+    });
+
+
     ctrl.do_stuff = function() {
       console.log("do something with the tile at ", ctrl.coord);
       if (game.state.hand)
@@ -130,39 +169,25 @@
       return ctrl.move_player();
     };
 
-    // HACK:FIXME: I AM GAME LOGIC. MOVE ME.
     // TODO: Add verbose error throwing. See: game.board.placeable
-    // This will be done when configurable game logic is implemented. dw, guys.
     ctrl.move_player = function() {
-      var board_coord = ctrl.board_coord
-          , tile = game.board.tiles[board_coord]
-          , board_point = ctrl.view.state.point_map[ctrl.coord]
-          , player_point = game.board.point(game.state.player.position)
-          ;
+      if (game.move_player(ctrl.board_coord)) {
+        ctrl.view.center_on(ctrl.board_point);
+        ctrl.view.update_view();
+        return true;
+      }
 
-      console.log("attempting to move player to ", board_point, " from ", player_point);
-      console.log("can move?", game.board.walkable(player_point, board_point));
-      if (!game.board.walkable(player_point, board_point))
-        return false;
-
-      game.state.player.position = board_coord;
-      ctrl.view.center_on(board_point);
-      ctrl.view.update_view();
-      return true;
+      return false;
     };
 
     ctrl.place_tile = function() {
       if (!game.state.hand)
         return;
 
-      console.log("attempting to place tile at ", ctrl.coord, ctrl.view.state.point_map[ctrl.coord]);
-      try {
-        game.board.place_tile(ctrl.view.state.point_map[ctrl.coord], game.state.hand);
-        game.state.hand = null;
+      if (game.place_tile(ctrl.board_point, game.state.hand)) {
         ctrl.remove_preview();
-      } catch(e) {
-        console.log(e);
       }
+
     };
 
     ctrl.preview_tile = function() {

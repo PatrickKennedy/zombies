@@ -5,7 +5,7 @@ A fully self-contained, portable, digital implementation of the solitaire game
 
 Like the original, this digital version is meant to be taken with you anywhere!
 This means everything necessary to play the game is included in the
-zombie_in_my_pocket.html file in the root directory. It can be put in dropbox,
+[zombie_in_my_pocket.html](https://rawgit.com/PatrickKennedy/zombies/master/zombie_in_my_pocket.html) file in the root directory. It can be put in dropbox,
 on a USB drive, even on a floppy disk if you swing that way.
 
 ## How To Play
@@ -21,6 +21,13 @@ Follow along with development via [Trello](https://trello.com/b/hPzZSV3X/zombies
 
 NOTE: Trello is a work in progress but more should be coming given the now
 workable state of the game.
+
+### [0.1.0](https://rawgit.com/PatrickKennedy/zombies/0.1.0/zombie_in_my_pocket.html)
+ * Dev cards aren't immediately resolved
+ * A preview of the card in your hand is previewed
+ * Dev cards are now described with functioning side-effects
+ * Tiles are now more aware of whether or not they can be interacted with
+
 
 ### [0.0.0](https://rawgit.com/PatrickKennedy/zombies/0.0.0/zombie_in_my_pocket.html) - Initial Public Offering (invest now!)
 

@@ -4,15 +4,15 @@
    * Contains playing field state and logic
    */
   angular
-    .module('game.board', ['game.config'])
+    .module('game.board', ['game.config', 'game.plugins'])
     .service('BoardManager', BoardManager)
     .factory('BoardNullTile', BoardNullTile)
     .factory('BoardTile', BoardTile)
   ;
 
 
-  BoardManager.$inject = ['GameConfig', 'BoardNullTile',];
-  function BoardManager(config, NullTile) {
+  BoardManager.$inject = ['GameConfig', 'BoardNullTile', 'PluginMount'];
+  function BoardManager(config, NullTile, Mount) {
     var ctrl = this;
 
     ctrl.placeholders = {
@@ -70,20 +70,7 @@
 
       // check to make sure the tile is reachable from the other tiles
       // TODO: replace with a configurable handler
-      connects = tile.exits.some(function(exit) {
-        var vector = tile.vectors[exit]
-            , exit_point = [
-              point[0] + vector[0],
-              point[1] + vector[1],
-            ]
-            ;
-        exit_coord = ctrl.coord(exit_point);
-        exit_tile = ctrl.tiles[exit_coord];
-        if (exit_tile && exit_tile.has_exit)
-          return exit_tile.has_exit((exit + 2) % 4);
-
-        return false;
-      }, this);
+      connects = Mount.get('game.board.placable.connects').run(ctrl, point, tile);
 
       if (!connects)
         throw new Error('tile does not connect to another tile');
@@ -137,11 +124,14 @@
       return [+matches[1], +matches[2]];
     };
 
-    ctrl.near = function(p1, p2) {
-      // Calculate the distance long a and b in c2 = a2 + b2
+    ctrl.near = function(p1, p2, nearness) {
+      nearness = (typeof nearness === 'undefined') ? 1 : nearness;
+
+      // Calculate the distance along a and b in c2 = a2 + b2
       var dist = Math.abs(p1[0] - p2[0]) + Math.abs(p1[1] - p2[1]);
 
-      return (dist >= 0) && (dist <= 1);
+      // position is the same, position is within nearness, position > nearness
+      return dist === 0 ? -1 : dist <= nearness ? 1 : 0;
     };
 
     ctrl.walkable = function(p1, p2) {
@@ -151,8 +141,9 @@
           , dir_coord = ctrl.coord(vec)
           ;
       // todo: add error throwing for better UI feedback
-      if (!t1 || !t2 || !ctrl.near(p1, p2))
+      if (!t1 || !t2 || ctrl.near(p1, p2) !== 1)
         return false;
+
       exit = t1.vector_map[dir_coord];
       return t1.has_exit(exit) && t2.has_exit((exit + 2) % 4);
     };

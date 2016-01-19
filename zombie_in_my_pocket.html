@@ -4,49 +4,53 @@
   flex-wrap: wrap;
   width: 1070px;
   margin: auto;
-  background: rgba(0,0,0,.5);
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.sidebar {
+  width: 250px;
+  padding: 25px 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.5);
 }
 
 zombies-view {
   display: flex;
   flex-wrap: wrap;
   width: 820px;
-  background: rgba(0,0,0,.5);
+  background: rgba(0, 0, 0, 0.5);
 }
-
-.control {
+zombies-view .control {
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  background: rgba(33, 128, 33, 1);
+  background: #218021;
   font-size: 16px;
   text-transform: uppercase;
 }
-
-.horz-control {
+zombies-view .control.horz-control {
   height: 35px;
   flex: 1 100%;
 }
-
-.vert-control {
+zombies-view .control.vert-control {
   width: 35px;
 }
-
-#playingfield {
+zombies-view #playingfield {
   display: flex;
   flex-wrap: wrap;
   flex: 1 0;
 }
-
-.playingfield-row {
+zombies-view .playingfield-row {
   display: flex;
 }
 
-
-/* Tile Styles */
+/* Card Styles */
 .view-tile {
-  transition: border-color .25s ease-in-out;
+  transition: border-color 0.25s ease-in-out;
   box-sizing: border-box;
   width: 250px;
   height: 250px;
@@ -55,28 +59,65 @@ zombies-view {
   justify-content: center;
   align-items: center;
   position: relative;
-  background: rgba(33, 33, 33, 1);
+  background: #212121;
   border: 10px solid black;
 }
-
-.view-tile.present {
-  background: rgba(97, 65, 33, 1);
+.view-tile.present, zombies-card-preview .view-tile {
+  background: #614121;
 }
-
 .view-tile.placeable {
-  background: rgba(160, 160, 33, 1);
+  background: #a0a021;
 }
-
-.view-tile.preview {
-  cursor: pointer;
-}
-
 .view-tile:hover {
   border-color: black;
 }
-
 .view-tile .name {
   font-size: 18pt;
+}
+
+.dev-card {
+  width: 200px;
+  height: 300px;
+  background: rgba(128, 110, 110, 0.5);
+  border: 1px solid gold;
+  position: relative;
+  align-items: center;
+}
+.dev-card .card-event {
+  height: 45%;
+  width: 50%;
+  border: black 1px solid;
+  background-color: whitesmoke;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  font-size: 11pt;
+}
+.dev-card .card-event.item {
+  right: 0;
+  bottom: 0;
+  height: 75px;
+  width: 75px;
+  justify-content: center;
+}
+.dev-card .card-event.nine {
+  top: 0;
+  left: 0;
+}
+.dev-card .card-event.ten {
+  top: 25%;
+  right: 0;
+}
+.dev-card .card-event.eleven {
+  bottom: 0;
+  left: 0;
+}
+.dev-card .card-event .event-time {
+  font-size: 15pt;
+  border-bottom: 1px solid black;
+  margin-bottom: 10px;
 }
 
 /* You Are Here Burst */
@@ -91,28 +132,36 @@ zombies-view {
 
 /* Doorway Border Holes */
 .exit {
-  background-color: rgba(97, 65, 33, 1);
+  background-color: #614121;
   position: absolute;
 }
 
 .exit-0 {
-  height: 15px;  width: 33%;
-  top: -10px;  left: 33%;
+  height: 15px;
+  width: 33%;
+  top: -10px;
+  left: 33%;
 }
 
 .exit-1 {
-  height: 33%;  width: 15px;
-  right: -10px;  top: 33%;
+  height: 33%;
+  width: 15px;
+  right: -10px;
+  top: 33%;
 }
 
 .exit-2 {
-  height: 15px;  width: 33%;
-  bottom: -10px;  left: 33%;
+  height: 15px;
+  width: 33%;
+  bottom: -10px;
+  left: 33%;
 }
 
 .exit-3 {
-  height: 33%;  width: 15px;
-  left: -10px;  top: 33%;
+  height: 33%;
+  width: 15px;
+  left: -10px;
+  top: 33%;
 }
 
 /* Mouse-over elements */
@@ -121,48 +170,75 @@ zombies-view {
   position: absolute;
 }
 
-.preview .hover-target {
-  background-color: transparent;
-}
-
 .hover-target-0 {
   height: 50px;
-  top: 0;  left: 50px; right: 50px;
+  top: 0;
+  left: 50px;
+  right: 50px;
 }
 
 .hover-target-1 {
   width: 50px;
-  right: 0;  top: 50px; bottom: 50px;
+  right: 0;
+  top: 50px;
+  bottom: 50px;
 }
 
 .hover-target-2 {
   height: 50px;
-  bottom: 0;  left: 50px; right: 50px;
+  bottom: 0;
+  left: 50px;
+  right: 50px;
 }
 
 .hover-target-3 {
   width: 50px;
-  left: 0;  top: 50px; bottom: 50px;
+  left: 0;
+  top: 50px;
+  bottom: 50px;
 }
-
 
 /* Draw Pile Styling */
-zombies-dev-draw {
-  width: 750px;
-  background: rgba(0,0,0,.5);
-}
-
 zombies-crib-sheet {
   width: 500px;
-  background: rgba(0,0,0,.5);
+  background: rgba(0, 0, 0, 0.5);
+}
+
+zombies-dev-draw {
+  width: 200px;
+  background: rgba(0, 0, 0, 0.5);
+}
+zombies-dev-draw .dev-card-back {
+  width: 200px;
+  height: 5px;
+  background: rgba(128, 0, 64, 0.5);
+  border: 1px solid gold;
+  border-top: none;
+}
+zombies-dev-draw .dev-card-back.top-card {
+  width: 200px;
+  height: 300px;
+  background: rgba(128, 0, 64, 0.5);
+  border: 1px solid gold;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+zombies-dev-draw .dev-card-back.top-card .deck-name {
+  font-size: 18pt;
 }
 
 zombies-tile-draw {
+  display: flex;
   width: 250px;
+  flex-grow: 1;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   position: relative;
-  background: rgba(0,0,0,.5);
+  background: rgba(0, 0, 0, 0.5);
 }
-
 zombies-tile-draw .tile-card {
   width: 200px;
   height: 5px;
@@ -170,7 +246,6 @@ zombies-tile-draw .tile-card {
   border: 1px solid gold;
   border-top: none;
 }
-
 zombies-tile-draw .tile-card.top-card {
   width: 200px;
   height: 200px;
@@ -180,25 +255,39 @@ zombies-tile-draw .tile-card.top-card {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  cursor: pointer;
 }
-
 zombies-tile-draw .tile-card.top-card .deck-name {
   font-size: 18pt;
 }
 
 /* Utility Functions */
-.rotate-0 { transform: rotate(0deg); }
-.rotate-1 { transform: rotate(90deg); }
-.rotate-2 { transform: rotate(180deg); }
-.rotate-3 { transform: rotate(270deg); }
+.interactable {
+  cursor: pointer;
+}
 
-</style></head><body ng-controller="ZombiesController as app"><div id="container"><zombies-view></zombies-view><zombies-dev-draw ng-model="app.game.decks.dev"></zombies-dev-draw><zombies-crib-sheet></zombies-crib-sheet><zombies-tile-draw ng-model="app.game.decks.indoor"></zombies-tile-draw><zombies-tile-draw ng-model="app.game.decks.outdoor"></zombies-tile-draw><button ng-click="app.initalize_game()">Start Game</button></div>
+.rotate-0 {
+  transform: rotate(0deg);
+}
+
+.rotate-1 {
+  transform: rotate(90deg);
+}
+
+.rotate-2 {
+  transform: rotate(180deg);
+}
+
+.rotate-3 {
+  transform: rotate(270deg);
+}
+
+/*# sourceMappingURL=zombies-0.1.0.css.map */
+</style></head><body ng-controller="ZombiesController as app"><div id="container"><zombies-view></zombies-view><div class="sidebar"><zombies-dev-draw ng-model="app.game.decks.dev"></zombies-dev-draw><zombies-card-preview ng-model="app.game.state.hand"></zombies-card-preview></div><zombies-crib-sheet></zombies-crib-sheet><zombies-tile-draw ng-model="app.game.decks.indoor"></zombies-tile-draw><zombies-tile-draw ng-model="app.game.decks.outdoor"></zombies-tile-draw><button ng-click="app.initalize_game()">Start Game</button></div>
 <script type="text/javascript">/**
- * zombies - v0.0.0 - 2015-12-25
+ * zombies - v0.1.0 - 2016-01-19
  * 
  *
- * Copyright (c) 2015 Patrick Kennedy <p@trickkennedy.com>
+ * Copyright (c) 2016 Patrick Kennedy <p@trickkennedy.com>
  * Licensed MIT <git@github.com:patrickkennedy/zombies.git>
  */
 /*
@@ -692,15 +781,15 @@ g=a.indexOf(c.charAt(n++)),h=a.indexOf(c.charAt(n++)),l=a.indexOf(c.charAt(n++))
    * Contains playing field state and logic
    */
   angular
-    .module('game.board', ['game.config'])
+    .module('game.board', ['game.config', 'game.plugins'])
     .service('BoardManager', BoardManager)
     .factory('BoardNullTile', BoardNullTile)
     .factory('BoardTile', BoardTile)
   ;
 
 
-  BoardManager.$inject = ['GameConfig', 'BoardNullTile',];
-  function BoardManager(config, NullTile) {
+  BoardManager.$inject = ['GameConfig', 'BoardNullTile', 'PluginMount'];
+  function BoardManager(config, NullTile, Mount) {
     var ctrl = this;
 
     ctrl.placeholders = {
@@ -758,20 +847,7 @@ g=a.indexOf(c.charAt(n++)),h=a.indexOf(c.charAt(n++)),l=a.indexOf(c.charAt(n++))
 
       // check to make sure the tile is reachable from the other tiles
       // TODO: replace with a configurable handler
-      connects = tile.exits.some(function(exit) {
-        var vector = tile.vectors[exit]
-            , exit_point = [
-              point[0] + vector[0],
-              point[1] + vector[1],
-            ]
-            ;
-        exit_coord = ctrl.coord(exit_point);
-        exit_tile = ctrl.tiles[exit_coord];
-        if (exit_tile && exit_tile.has_exit)
-          return exit_tile.has_exit((exit + 2) % 4);
-
-        return false;
-      }, this);
+      connects = Mount.get('game.board.placable.connects').run(ctrl, point, tile);
 
       if (!connects)
         throw new Error('tile does not connect to another tile');
@@ -825,11 +901,14 @@ g=a.indexOf(c.charAt(n++)),h=a.indexOf(c.charAt(n++)),l=a.indexOf(c.charAt(n++))
       return [+matches[1], +matches[2]];
     };
 
-    ctrl.near = function(p1, p2) {
-      // Calculate the distance long a and b in c2 = a2 + b2
+    ctrl.near = function(p1, p2, nearness) {
+      nearness = (typeof nearness === 'undefined') ? 1 : nearness;
+
+      // Calculate the distance along a and b in c2 = a2 + b2
       var dist = Math.abs(p1[0] - p2[0]) + Math.abs(p1[1] - p2[1]);
 
-      return (dist >= 0) && (dist <= 1);
+      // position is the same, position is within nearness, position > nearness
+      return dist === 0 ? -1 : dist <= nearness ? 1 : 0;
     };
 
     ctrl.walkable = function(p1, p2) {
@@ -839,8 +918,9 @@ g=a.indexOf(c.charAt(n++)),h=a.indexOf(c.charAt(n++)),l=a.indexOf(c.charAt(n++))
           , dir_coord = ctrl.coord(vec)
           ;
       // todo: add error throwing for better UI feedback
-      if (!t1 || !t2 || !ctrl.near(p1, p2))
+      if (!t1 || !t2 || ctrl.near(p1, p2) !== 1)
         return false;
+
       exit = t1.vector_map[dir_coord];
       return t1.has_exit(exit) && t2.has_exit((exit + 2) % 4);
     };
@@ -972,17 +1052,21 @@ g=a.indexOf(c.charAt(n++)),h=a.indexOf(c.charAt(n++)),l=a.indexOf(c.charAt(n++))
    * Contains core website logic
    */
   angular
-    .module('game.core', ['game.config', 'game.board', 'game.deck'])
+    .module('game.core', [
+      'game.config', 'game.board', 'game.deck', 'game.plugins'
+    ])
     .service('GameManager', GameManager)
   ;
 
-  GameManager.$inject = ['GameConfig', 'BoardManager', ];
-  function GameManager(config, board) {
+  GameManager.$inject = ['GameConfig', 'BoardManager', 'PluginMount'];
+  function GameManager(config, board, Mount) {
     var ctrl = this;
 
     ctrl.defaults = {
       env: {
         time: 9,
+        zombies: 0,
+        resolve_for_item: false,
       },
       player: {
         position: "0:0",
@@ -991,8 +1075,12 @@ g=a.indexOf(c.charAt(n++)),h=a.indexOf(c.charAt(n++)),l=a.indexOf(c.charAt(n++))
         items: [],
         weapons: [],
         totem: false,
+        can_move: true,
+        can_run: false,
       },
       hand: null,
+      initalized: true,
+      running: true,
     };
 
     ctrl.state = {};
@@ -1005,32 +1093,29 @@ g=a.indexOf(c.charAt(n++)),h=a.indexOf(c.charAt(n++)),l=a.indexOf(c.charAt(n++))
       ctrl.board.initalize();
     };
 
-    ctrl.move = function () {
-
+    ctrl.move_player = function (to_coord) {
+      return Mount.get('game.core.move_player').run(ctrl, to_coord);
     };
 
-    ctrl.move_player = function () {
-
-    };
-
-    ctrl.draw_tile = function (point, tile) {
-
+    ctrl.draw_tile = function (deck) {
+      Mount.get('game.core.draw_tile').run(ctrl, deck);
     };
 
     ctrl.place_tile = function (point, tile) {
-
+      Mount.get('game.core.place_tile').run(ctrl, point, tile);
     };
 
-    ctrl.draw_card = function() {
-
+    ctrl.draw_card = function(deck) {
+      Mount.get('game.core.draw_card').run(ctrl, deck);
     };
 
-    ctrl.resolve_card = function() {
-
+    ctrl.resolve_card = function(card) {
+      Mount.get('game.core.resolve_card').run(ctrl, card);
     };
   }
 
 }(angular));
+
 
 (function(angular){
   /*
@@ -1064,9 +1149,17 @@ g=a.indexOf(c.charAt(n++)),h=a.indexOf(c.charAt(n++)),l=a.indexOf(c.charAt(n++))
   DeckManager.$inject = [];
   function DeckManager() {
     var Deck = function(stock, name) {
-      this.name = name;
-      this.stock = stock;
-      this.burn_pile = [];
+      var self = this;
+      self.name = name;
+      self.stock = stock;
+      self.burn_pile = [];
+
+      // HACK: expose deck functions to each card so it can be manipulated
+      // in the absence of information about the deck.
+      self.stock.forEach(function(card) {
+        card.deck = self;
+        card.discard = function() { self.discard(card); };
+      });
     };
 
     Deck.prototype.shuffle = function (){
@@ -1164,6 +1257,107 @@ g=a.indexOf(c.charAt(n++)),h=a.indexOf(c.charAt(n++)),l=a.indexOf(c.charAt(n++))
 
 (function(angular){
   /*
+   * Plugin module
+   * Manages all plugin related overhead functionality
+   *
+   * Mounts are singletons created on-demand which store references to and
+   * manage all actions and action-specific interactions.
+   *
+   * Plugins define actions which are assigned to different mounts, these
+   * actions are hot-swappable and can be disabled when unneeded.
+   *
+   * There is no specified way mounts must return values, each mount should
+   * document the arguments sent and expected return values.
+   */
+  angular
+    .module('game.plugins', [])
+    .service('PluginManager', PluginManager)
+    .factory('PluginMount', PluginMount)
+  ;
+
+
+  PluginManager.$inject = [];
+  function PluginManager() {
+    var self = this;
+    self.mounts = {};
+
+    self.disable = function(plugin_name) {
+      for (var mount in self.mounts) { mount.disable(plugin_name); }
+    };
+
+    self.enable = function(plugin_name) {
+      for (var mount in self.mounts) { mount.enable(plugin_name); }
+    };
+  }
+
+  PluginMount.$inject = ['PluginManager'];
+  function PluginMount(manager) {
+    var Mount = function(name) {
+      var self = this;
+      self.name = name;
+      self.actions = {};
+      self.disabled = {};
+      manager.mounts[name] = self;
+      manager.__defineGetter__(name, function(){ return self; });
+    };
+
+    Mount.get = function(mount_name) {
+      return manager.mounts[mount_name] || new Mount(mount_name);
+    };
+
+    Mount.prototype.use = function(plugin_name, action) {
+      var self = this;
+      self.actions[plugin_name] = action;
+
+      return {
+        disable: function() { self.disable(plugin_name); },
+        enable:  function() { self.enable(plugin_name); },
+      };
+    };
+
+    Mount.prototype.enable = function(plugin_name) {
+      if (typeof this.disabled[plugin_name] === "undefined")
+        return false;
+
+      this.actions[plugin_name] = this.disabled[plugin_name];
+      delete this.disabled[plugin_name];
+
+      return true;
+    };
+
+    Mount.prototype.disable = function(plugin_name) {
+      if (typeof this.actions[plugin_name] === "undefined")
+        return false;
+
+      this.disabled[plugin_name] = this.actions[plugin_name];
+      delete this.actions[plugin_name];
+
+      return true;
+    };
+
+    Mount.prototype.run = function(context) {
+      var self = this
+          , args = Array.prototype.slice.call(arguments, 1)
+          , result = null, prev_result = null
+          ;
+
+      // pad for future splices
+      args.unshift(null);
+
+      for (var plugin_name in self.actions) {
+        prev_result = args.splice(0, 1, [result, prev_result])[0];
+        result = self.actions[plugin_name].apply(context, args);
+      }
+
+      return result;
+    };
+
+    return Mount;
+  }
+}(angular));
+
+(function(angular){
+  /*
    * Config module
    * Contains server-side configuration variables
    */
@@ -1193,6 +1387,7 @@ g=a.indexOf(c.charAt(n++)),h=a.indexOf(c.charAt(n++)),l=a.indexOf(c.charAt(n++))
     .module('zombies', [
       'zombies.templates', 'zombies.config', 'game.core',
       'zombies.cribsheet', 'zombies.decks', 'zombies.view',
+      'plugin.zombies',
     ])
     .controller('ZombiesController', ZombiesController)
   ;
@@ -1201,6 +1396,7 @@ g=a.indexOf(c.charAt(n++)),h=a.indexOf(c.charAt(n++)),l=a.indexOf(c.charAt(n++))
     '$scope', 'ZombiesConfig',
     'GameConfig', 'GameManager',
     'DeckManager', 'BoardTile',
+    'PluginZombies',
   ];
   function ZombiesController($scope, config, game_config, game, Deck, Tile) {
     var app = this;
@@ -1221,7 +1417,7 @@ g=a.indexOf(c.charAt(n++)),h=a.indexOf(c.charAt(n++)),l=a.indexOf(c.charAt(n++))
       game.decks = {
         indoor:   new Deck(game_config.cards.indoor.slice().map(function(t){ return new Tile(t); }), "Indoor"),
         outdoor:  new Deck(game_config.cards.outdoor.slice().map(function(t){ return new Tile(t); }), "Outdoor"),
-        dev:      new Deck(game_config.cards.dev.slice().map(function(t){ return new Tile(t); }), "Dev"),
+        dev:      new Deck(game_config.cards.dev.slice().map(function(t){ return t; }), "Dev"),
       };
 
       // the top of the card definitions (foyer) is always the first card we want to draw
@@ -1232,6 +1428,128 @@ g=a.indexOf(c.charAt(n++)),h=a.indexOf(c.charAt(n++)),l=a.indexOf(c.charAt(n++))
       game.decks.outdoor.shuffle().discard(hold).combine();
       game.decks.dev.shuffle();
     };
+  }
+}(angular));
+
+(function(angular){
+  /*
+   * Zombies Plugin
+   * Contains all game logic related to the Zombies game mod
+   */
+
+  var plugin_name = 'plugin.zombies';
+  angular
+    .module(plugin_name, ['game.plugins'])
+    .service('PluginZombies', PluginZombies)
+  ;
+
+  PluginZombies.$inject = ['PluginMount'];
+  function PluginZombies(Mount) {
+    var connect_check = Mount.get('game.board.placable.connects');
+    connect_check.use(plugin_name, function(history, point, tile) {
+      var ctrl = this;
+      // TODO: for future safety something like history[0] && ... should be used
+      return tile.exits.some(function(exit) {
+        var vector = tile.vectors[exit]
+            , exit_point = [
+              point[0] + vector[0],
+              point[1] + vector[1],
+            ]
+            ;
+        exit_coord = ctrl.coord(exit_point);
+        exit_tile = ctrl.tiles[exit_coord];
+        if (exit_tile && exit_tile.has_exit)
+          return exit_tile.has_exit((exit + 2) % 4);
+
+        return false;
+      }, this);
+    });
+
+
+    var move_player = Mount.get('game.core.move_player');
+    move_player.use(plugin_name, function(history, to_coord) {
+      var game = this
+          , to_point = game.board.point(to_coord)
+          , player_point = game.board.point(game.state.player.position)
+          ;
+
+      console.log("attempting to move player to ", to_point, " from ", player_point);
+      console.log("can move?", game.board.walkable(player_point, to_point));
+      if (!game.state.player.can_move || !game.board.walkable(player_point, to_point))
+        return false;
+
+      game.state.player.position = to_coord;
+      game.state.player.can_move = false;
+      return true;
+    });
+
+
+    var draw_tile = Mount.get('game.core.draw_tile');
+    draw_tile.use(plugin_name, function(history, deck) {
+      var game = this;
+      game.state.hand = deck.draw();
+    });
+
+
+    var place_tile = Mount.get('game.core.place_tile');
+    place_tile.use(plugin_name, function(history, point, tile) {
+      var game = this;
+      console.log("attempting to place tile at ", point);
+      try {
+        game.board.place_tile(point, game.state.hand);
+      } catch(e) {
+        console.log(e);
+        return false;
+      }
+
+      game.state.hand = null;
+      game.board.events += 1;
+      game.move_player(game.board.coord(point));
+      return true;
+    });
+
+
+    var draw_card = Mount.get('game.core.draw_card');
+    draw_card.use(plugin_name, function(history, deck) {
+      var game = this;
+      if (deck.stock.length === 0) {
+        deck.combine().shuffle().burn(2);
+      }
+      game.state.hand = deck.draw();
+    });
+
+
+    var resolve_card = Mount.get('game.core.resolve_card');
+    var resolve_combat = Mount.get('game.core.resolve_combat');
+    resolve_card.use(plugin_name, function(history, card) {
+      var game = this;
+      console.log("resolving dev card: ", card);
+      if (game.state.env.resolve_for_item) {
+        card.item.result(game);
+        game.state.env.resolve_for_item = false;
+      } else {
+        card[game.state.env.time].result(game);
+      }
+
+      if (game.state.env.zombies)
+        resolve_combat.run(game);
+
+      game.state.player.can_move = true;
+
+      // TODO: Move to a post-mount after that system is implemented
+      game.state.hand = null;
+      card.discard();
+      if (card.deck.stock.length === 0) {
+        game.state.env.time += 1;
+        card.deck.combine().shuffle().burn(2);
+      }
+    });
+
+    resolve_combat.use(plugin_name, function(history) {
+      var game = this;
+      game.state.player.health -= game.state.env.zombies - game.state.player.attack;
+      game.state.env.zombies = 0;
+    });
   }
 }(angular));
 
@@ -1334,7 +1652,171 @@ g=a.indexOf(c.charAt(n++)),h=a.indexOf(c.charAt(n++)),l=a.indexOf(c.charAt(n++))
               on_resolve: function(){ }
             },
           ],
-          dev: [],
+
+          dev: [
+          {
+            item: {
+              desc: 'Grisly Femur',
+              result: function(game) { game.state.player.weapon = 'femur'; },
+            },
+            9: {
+              desc: 'ITEM',
+              result: function(game) { game.state.env.resolve_for_item = true; },
+            },
+            10: {
+              desc: '5 Zombies',
+              result: function(game) { game.state.env.zombies = 5; },
+            },
+            11: {
+              desc: "Your soul isn't wanted here. -1 HEALTH",
+              result: function(game) { game.state.player.health -= 1; },
+            },
+          },
+          {
+            item: {
+              desc: 'Gasoline',
+              result: function(game) { game.state.player.item = 'gas'; },
+            },
+            9: {
+              desc: '4 Zombies',
+              result: function(game) { game.state.env.zombies = 4; },
+            },
+            10: {
+              desc: 'You sense your impending doom. -1 HEALTH',
+              result: function(game) { game.state.player.health -= 1; },
+            },
+            11: {
+              desc: "ITEM",
+              result: function(game) { game.state.env.resolve_for_item = true; },
+            },
+          },
+          {
+            item: {
+              desc: 'Chainsaw',
+              result: function(game) { game.state.player.item = 'saw'; },
+            },
+            9: {
+                desc: '3 Zombies',
+                result: function(game) { game.state.env.zombies = 3; },
+            },
+            10: {
+                desc: 'You hear terrible screams',
+                result: function(game) { },
+            },
+            11: {
+                desc: '5 Zombies',
+                result: function(game) { game.state.env.zombies = 5; },
+            },
+          },
+          {
+            item: {
+              desc: 'Board with Nails',
+              result: function(game) { game.state.player.item = 'board'; },
+            },
+            9: {
+              desc: "ITEM",
+              result: function(game) { game.state.env.resolve_for_item = true; },
+            },
+            10: {
+              desc: '4 Zombies',
+              result: function(game) { game.state.env.zombies = 4; },
+            },
+            11: {
+              desc: 'Something icky in your mouth. -1 HEALTH',
+              result: function(game) { game.state.player.health -= 1; },
+            },
+          },
+          {
+            item: {
+              desc: 'Board with Nails',
+              result: function(game) { game.state.player.item = 'board'; },
+            },
+            9: {
+              desc: 'Slip on nasty goo. -1 HEALTH',
+              result: function(game) { game.state.player.health -= 1; },
+            },
+            10: {
+              desc: '4 Zombies',
+              result: function(game) { game.state.env.zombies = 4; },
+            },
+            11: {
+              desc: 'The smell of blood is in the air.',
+              result: function(game) { },
+            },
+          },
+          {
+            item: {
+              desc: 'Machete',
+              result: function(game) { game.state.player.item = 'machete'; },
+            },
+            9: {
+              desc: '4 Zombies',
+              result: function(game) { game.state.env.zombies = 4; },
+            },
+            10: {
+              desc: 'The smell of blood is in the air.',
+              result: function(game) { },
+            },
+            11: {
+              desc: '6 Zombies',
+              result: function(game) { game.state.env.zombies = 6; },
+            },
+          },
+          {
+            item: {
+              desc: 'Can of Soda',
+              result: function(game) { game.state.player.item = 'soda'; },
+            },
+            9: {
+              desc: 'Candybar in your pocket. +1 HEALTH',
+              result: function(game) { game.state.player.health += 1; },
+            },
+            10: {
+              desc: "ITEM",
+              result: function(game) { game.state.env.resolve_for_item = true; },
+            },
+            11: {
+              desc: '4 Zombies',
+              result: function(game) { game.state.env.zombies = 4; },
+            },
+          },
+          {
+            item: {
+              desc: 'Candle',
+              result: function(game) { game.state.player.item = 'candle'; },
+            },
+            9: {
+              desc: 'Candybar in your pocket. +1 HEALTH',
+              result: function(game) { game.state.player.health += 1; },
+            },
+            10: {
+              desc: "ITEM",
+              result: function(game) { game.state.env.resolve_for_item = true; },
+            },
+            11: {
+              desc: '4 Zombies',
+              result: function(game) { game.state.env.zombies = 4; },
+            },
+          },
+          {
+            item: {
+              desc: 'Oil',
+              result: function(game) { game.state.player.item = 'oil'; },
+            },
+            9: {
+              desc: 'You try hard not to wet yourself.',
+              result: function(game) { },
+            },
+            10: {
+              desc: "ITEM",
+              result: function(game) { game.state.env.resolve_for_item = true; },
+            },
+            11: {
+              desc: '6 Zombies',
+              result: function(game) { game.state.env.zombies = 6; },
+            },
+          },
+          ],
         },
       });
     });
@@ -1388,6 +1870,8 @@ g=a.indexOf(c.charAt(n++)),h=a.indexOf(c.charAt(n++)),l=a.indexOf(c.charAt(n++))
     .controller('ZombiesDevDrawCtrl', ZombiesDevDrawCtrl)
     .directive('zombiesTileDraw', zombiesTileDraw)
     .controller('ZombiesTileDrawCtrl', ZombiesTileDrawCtrl)
+    .directive('zombiesCardPreview', zombiesCardPreview)
+    .controller('ZombiesCardPreviewCtrl', ZombiesCardPreviewCtrl)
   ;
 
   function zombiesTileDraw() {
@@ -1406,9 +1890,17 @@ g=a.indexOf(c.charAt(n++)),h=a.indexOf(c.charAt(n++)),l=a.indexOf(c.charAt(n++))
   function ZombiesTileDrawCtrl(game) {
     var ctrl = this;
     ctrl.draw = function (){
+      // TODO: Implement player feedback
+      if (!ctrl.interactable)
+        return;
       console.log('drawing card');
-      game.state.hand = ctrl.deck.draw();
+      game.draw_tile(ctrl.deck);
     };
+
+    Object.defineProperty(ctrl, "interactable", {
+      get: function () { return game.state.player.can_move; },
+      enumerable: true,
+    });
   }
 
 
@@ -1428,9 +1920,51 @@ g=a.indexOf(c.charAt(n++)),h=a.indexOf(c.charAt(n++)),l=a.indexOf(c.charAt(n++))
   function ZombiesDevDrawCtrl(game) {
     var ctrl = this;
     ctrl.draw = function (){
+      // TODO: Implement player feedback
+      if (!ctrl.interactable)
+        return;
       console.log('drawing card');
-      game.state.hand = ctrl.deck.draw();
+      game.draw_card(ctrl.deck);
     };
+
+    Object.defineProperty(ctrl, "interactable", {
+      get: function () {
+        return !game.state.player.can_move || game.state.env.resolve_for_item;
+      },
+      enumerable: true,
+    });
+  }
+
+  function zombiesCardPreview() {
+    return {
+      scope: {},
+      bindToController: {
+        card: '=ngModel',
+      },
+      templateUrl: 'cardpreview.jade',
+      controller: 'ZombiesCardPreviewCtrl',
+      controllerAs: 'ctrl',
+    };
+  }
+
+  ZombiesCardPreviewCtrl.$inject = ['GameManager'];
+  function ZombiesCardPreviewCtrl(game) {
+    var ctrl = this;
+    ctrl.resolve = function (){
+      // TODO: Implement player feedback
+      if (!ctrl.interactable)
+        return;
+      console.log('resolving card');
+      game.resolve_card(game.state.hand, ctrl.deck);
+      game.state.player.can_move = true;
+    };
+
+    ctrl.update_action_preview = function (){};
+
+    Object.defineProperty(ctrl, "interactable", {
+      get: function () { return game.state.hand.item; },
+      enumerable: true,
+    });
   }
 }(angular));
 
@@ -1543,9 +2077,12 @@ g=a.indexOf(c.charAt(n++)),h=a.indexOf(c.charAt(n++)),l=a.indexOf(c.charAt(n++))
   function ZombiesTileCtrl(game) {
     var ctrl = this;
     Object.defineProperty(ctrl, "board_coord", {
-      get: function () {
-        return game.board.coord(ctrl.view.state.point_map[ctrl.coord]);
-      },
+      get: function () { return game.board.coord(ctrl.board_point); },
+      enumerable: true,
+    });
+
+    Object.defineProperty(ctrl, "board_point", {
+      get: function () { return ctrl.view.state.point_map[ctrl.coord]; },
       enumerable: true,
     });
 
@@ -1558,6 +2095,42 @@ g=a.indexOf(c.charAt(n++)),h=a.indexOf(c.charAt(n++)),l=a.indexOf(c.charAt(n++))
       enumerable: true,
     });
 
+    Object.defineProperty(ctrl, "interactable", {
+      get: function () {
+        if (!game.state.running || !ctrl.tile || !game.state.player.can_move)
+          return false;
+
+        if (game.state.hand) {
+          return ctrl.tile.preview;
+        } else {
+          return !ctrl.tile.placeable &&
+                  game.board.walkable(
+                    game.board.point(game.state.player.position),
+                    game.board.point(ctrl.board_coord)
+                  )
+                  ;
+        }
+      },
+      enumerable: true,
+    });
+
+    Object.defineProperty(ctrl, "ng_classes", {
+      get: function () {
+        var class_tests = {
+          present: ctrl.tile,
+          placeable: ctrl.tile && ctrl.tile.placeable,
+          preview: ctrl.tile && ctrl.tile.preview,
+          interactable: ctrl.interactable,
+        };
+
+        return Object.keys(class_tests)
+                .map(function(cls) { return class_tests[cls] ? cls : ""; })
+                .join(' ');
+      },
+      enumerable: true,
+    });
+
+
     ctrl.do_stuff = function() {
       console.log("do something with the tile at ", ctrl.coord);
       if (game.state.hand)
@@ -1566,39 +2139,25 @@ g=a.indexOf(c.charAt(n++)),h=a.indexOf(c.charAt(n++)),l=a.indexOf(c.charAt(n++))
       return ctrl.move_player();
     };
 
-    // HACK:FIXME: I AM GAME LOGIC. MOVE ME.
     // TODO: Add verbose error throwing. See: game.board.placeable
-    // This will be done when configurable game logic is implemented. dw, guys.
     ctrl.move_player = function() {
-      var board_coord = ctrl.board_coord
-          , tile = game.board.tiles[board_coord]
-          , board_point = ctrl.view.state.point_map[ctrl.coord]
-          , player_point = game.board.point(game.state.player.position)
-          ;
+      if (game.move_player(ctrl.board_coord)) {
+        ctrl.view.center_on(ctrl.board_point);
+        ctrl.view.update_view();
+        return true;
+      }
 
-      console.log("attempting to move player to ", board_point, " from ", player_point);
-      console.log("can move?", game.board.walkable(player_point, board_point));
-      if (!game.board.walkable(player_point, board_point))
-        return false;
-
-      game.state.player.position = board_coord;
-      ctrl.view.center_on(board_point);
-      ctrl.view.update_view();
-      return true;
+      return false;
     };
 
     ctrl.place_tile = function() {
       if (!game.state.hand)
         return;
 
-      console.log("attempting to place tile at ", ctrl.coord, ctrl.view.state.point_map[ctrl.coord]);
-      try {
-        game.board.place_tile(ctrl.view.state.point_map[ctrl.coord], game.state.hand);
-        game.state.hand = null;
+      if (game.place_tile(ctrl.board_point, game.state.hand)) {
         ctrl.remove_preview();
-      } catch(e) {
-        console.log(e);
       }
+
     };
 
     ctrl.preview_tile = function() {
@@ -1658,26 +2217,36 @@ g=a.indexOf(c.charAt(n++)),h=a.indexOf(c.charAt(n++)),l=a.indexOf(c.charAt(n++))
   }
 }(angular));
 
-angular.module('zombies.templates', ['cribsheet.jade', 'devdraw.jade', 'tile.jade', 'tiledraw.jade', 'view.jade']);
+angular.module('zombies.templates', ['cardpreview.jade', 'cribsheet.jade', 'dev.jade', 'devdraw.jade', 'tile.jade', 'tiledraw.jade', 'view.jade']);
+
+angular.module("cardpreview.jade", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("cardpreview.jade",
+    "<div id=\"cardpreview\" ng-if=\"ctrl.card\"><div ng-if=\"ctrl.card.item\"><div ng-click=\"ctrl.resolve()\" ng-mouseenter=\"ctrl.update_move_preview()\" ng-mouseleave=\"ctrl.update_move_preview()\" class=\"dev-card\"><div class=\"card-event nine\"><div class=\"event-time\">9:00PM</div>{{ ctrl.card[9].desc }}</div><div class=\"card-event ten\"><div class=\"event-time\">10:00PM</div>{{ ctrl.card[10].desc }}</div><div class=\"card-event eleven\"><div class=\"event-time\">11:00PM</div>{{ ctrl.card[11].desc }}</div><div class=\"card-event item\">  {{ ctrl.card.item.desc }}</div></div></div><div ng-if=\"!ctrl.card.item\" ng-init=\"ctrl.tile = ctrl.card;\"><div ng-class=\"ctrl.ng_classes\" ng-click=\"ctrl.do_stuff()\" ng-mouseenter=\"ctrl.preview_tile()\" ng-mouseleave=\"ctrl.remove_preview()\" class=\"view-tile\"><div class=\"name rotate-{{ctrl.tile.rotation}}\">{{ ctrl.tile.name }}</div><div ng-if=\"ctrl.actor_here\" class=\"actor\"></div><div ng-repeat=\"exit in ctrl.tile.exits\" class=\"exit exit-{{ exit }}\"></div><div ng-show=\"ctrl.tile.placeable || ctrl.tile.preview\"><div ng-repeat=\"exit in [0, 1, 2, 3]\" ng-mouseover=\"ctrl.rotate_preview(exit)\" class=\"hover-target hover-target-{{ exit }}\"></div></div></div></div></div>");
+}]);
 
 angular.module("cribsheet.jade", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("cribsheet.jade",
     "<div id=\"cribsheet\"><ul><li>Time: {{ ctrl.state.env.time }}</li><li>Heath: {{ ctrl.state.player.health }}</li><li>Attack: {{ ctrl.state.player.attack }}</li><li>Totem: {{ ctrl.state.player.totem }}</li></ul><ul><li>Weapons:<ul><li ng-repeat=\"weapon in ctrl.state.player.weapons\"></li></ul></li><li>Items:<ul><li ng-repeat=\"item in ctrl.state.player.items\"></li></ul></li></ul></div>");
 }]);
 
+angular.module("dev.jade", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("dev.jade",
+    "<div ng-click=\"ctrl.resolve()\" ng-mouseenter=\"ctrl.update_move_preview()\" ng-mouseleave=\"ctrl.update_move_preview()\" class=\"dev-card\"><div class=\"item\">  {{ ctrl.card.item.desc }}</div><div class=\"nine\">  {{ ctrl.card.9.desc }}</div><div class=\"ten\">   {{ ctrl.card.10.desc }}</div><div class=\"eleven\">{{ ctrl.card.11.desc }}</div></div>");
+}]);
+
 angular.module("devdraw.jade", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("devdraw.jade",
-    "<div id=\"devdraw\"></div>");
+    "<div ng-repeat=\"card in ctrl.deck.stock\" ng-class=\"{ 'top-card': $first, interactable: ctrl.interactable }\" ng-click=\"ctrl.draw()\" class=\"dev-card-back\"><div ng-if=\"$first\" class=\"deck-name\">{{ ctrl.deck.name }}</div></div>");
 }]);
 
 angular.module("tile.jade", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("tile.jade",
-    "<div ng-class=\"{placeable: ctrl.tile.placeable, present: ctrl.tile, preview: ctrl.tile.preview}\" ng-click=\"ctrl.do_stuff()\" ng-mouseenter=\"ctrl.preview_tile()\" ng-mouseleave=\"ctrl.remove_preview()\" class=\"view-tile\"><div class=\"name rotate-{{ctrl.tile.rotation}}\">{{ ctrl.tile.name }}</div><div ng-if=\"ctrl.actor_here\" class=\"actor\"></div><div ng-repeat=\"exit in ctrl.tile.exits\" class=\"exit exit-{{ exit }}\"></div><div ng-show=\"ctrl.tile.placeable || ctrl.tile.preview\"><div ng-repeat=\"exit in [0, 1, 2, 3]\" ng-mouseover=\"ctrl.rotate_preview(exit)\" class=\"hover-target hover-target-{{ exit }}\"></div></div></div>");
+    "<div ng-class=\"ctrl.ng_classes\" ng-click=\"ctrl.do_stuff()\" ng-mouseenter=\"ctrl.preview_tile()\" ng-mouseleave=\"ctrl.remove_preview()\" class=\"view-tile\"><div class=\"name rotate-{{ctrl.tile.rotation}}\">{{ ctrl.tile.name }}</div><div ng-if=\"ctrl.actor_here\" class=\"actor\"></div><div ng-repeat=\"exit in ctrl.tile.exits\" class=\"exit exit-{{ exit }}\"></div><div ng-show=\"ctrl.tile.placeable || ctrl.tile.preview\"><div ng-repeat=\"exit in [0, 1, 2, 3]\" ng-mouseover=\"ctrl.rotate_preview(exit)\" class=\"hover-target hover-target-{{ exit }}\"></div></div></div>");
 }]);
 
 angular.module("tiledraw.jade", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("tiledraw.jade",
-    "<div ng-repeat=\"card in ctrl.deck.stock\" ng-class=\"{ 'top-card': $first }\" ng-click=\"ctrl.draw()\" class=\"tile-card\"><div ng-if=\"$first\" class=\"deck-name\">{{ ctrl.deck.name }}</div></div>");
+    "<div ng-repeat=\"card in ctrl.deck.stock\" ng-class=\"{ 'top-card': $first, interactable: ctrl.interactable }\" ng-click=\"ctrl.draw()\" class=\"tile-card\"><div ng-if=\"$first\" class=\"deck-name\">{{ ctrl.deck.name }}</div></div>");
 }]);
 
 angular.module("view.jade", []).run(["$templateCache", function($templateCache) {

@@ -7,8 +7,9 @@ describe('Game', function() {
         ;
 
     beforeEach(module('game.board'));
+    beforeEach(module('plugin.zombies'));
 
-    beforeEach(inject(function(BoardManager, BoardTile) {
+    beforeEach(inject(function(BoardManager, BoardTile, PluginZombies) {
       board = BoardManager;
       Tile = BoardTile;
       example_tiles = {
@@ -211,12 +212,26 @@ describe('Game', function() {
       });
 
       describe('.near', function (){
-        it('should return true if two points are next to one another', function(){
-          expect(board.near([0, 0], [0, 1])).toBe(true);
-          expect(board.near([0, 0], [0, -1])).toBe(true);
-          expect(board.near([-1, 0], [0, 1])).toBe(false);
-          expect(board.near([-14, 7], [-13, 7])).toBe(true);
-          expect(board.near([-14, 8], [13, 8])).toBe(false);
+        it('should return 1 if two points are next to one another', function(){
+          expect(board.near([0, 0], [0, 1])).toBe(1);
+          expect(board.near([0, 0], [0, -1])).toBe(1);
+          expect(board.near([-1, 0], [0, 1])).toBe(0);
+          expect(board.near([-14, 7], [-13, 7])).toBe(1);
+          expect(board.near([-14, 8], [13, 8])).toBe(0);
+        });
+
+        it('should return 1 if two points are within 2 units of one another', function(){
+          expect(board.near([0, 0], [0, 1], 2)).toBe(1);
+          expect(board.near([0, 0], [0, 2], 2)).toBe(1);
+          expect(board.near([-1, 0], [0, 1], 2)).toBe(1);
+          expect(board.near([-14, 7], [-13, 7], 2)).toBe(1);
+          expect(board.near([-14, 8], [13, 8], 2)).toBe(0);
+        });
+
+        it('should return -1 if two points are on the same point', function(){
+          expect(board.near([0, 0], [0, 0])).toBe(-1);
+          expect(board.near([1, -1], [1, -1])).toBe(-1);
+          expect(board.near([-14, 7], [-14, 7])).toBe(-1);
         });
       });
 
