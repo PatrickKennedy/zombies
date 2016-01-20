@@ -76,19 +76,19 @@
     };
 
     ctrl.draw_tile = function (deck) {
-      Mount.get('game.core.draw_tile').run(ctrl, deck);
+      return Mount.get('game.core.draw_tile').run(ctrl, deck);
     };
 
     ctrl.place_tile = function (point, tile) {
-      Mount.get('game.core.place_tile').run(ctrl, point, tile);
+      return Mount.get('game.core.place_tile').run(ctrl, point, tile);
     };
 
     ctrl.draw_card = function(deck) {
-      Mount.get('game.core.draw_card').run(ctrl, deck);
+      return Mount.get('game.core.draw_card').run(ctrl, deck);
     };
 
-    ctrl.resolve_card = function(card, deck) {
-      Mount.get('game.core.resolve_card').run(ctrl, card, deck);
+    ctrl.resolve_card = function(card) {
+      return Mount.get('game.core.resolve_card').run(ctrl, card);
     };
   }
 
