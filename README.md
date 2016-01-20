@@ -22,6 +22,9 @@ Follow along with development via [Trello](https://trello.com/b/hPzZSV3X/zombies
 NOTE: Trello is a work in progress but more should be coming given the now
 workable state of the game.
 
+### [0.1.1](https://rawgit.com/PatrickKennedy/zombies/0.1.1/zombie_in_my_pocket.html)
+ * Fix leftover tile previews causing unintentional tile rotations after placement
+
 ### [0.1.0](https://rawgit.com/PatrickKennedy/zombies/0.1.0/zombie_in_my_pocket.html)
  * Dev cards aren't immediately resolved
  * A preview of the card in your hand is previewed
